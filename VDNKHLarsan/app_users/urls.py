@@ -6,5 +6,5 @@ urlpatterns = [
     path('login/', views.MyLoginView.as_view(), name='login'),
     path('logout/', views.MyLogoutView.as_view(), name='logout'),
     path('profile/<int:pk>/', views.ProfileDetailView.as_view(), name='profile'),
-    path('profile/<int:pk>/redact/', views.ProfileUpdateView.as_view(), name='redact'),
+    path('profile/<int:pk>/redact/', views.ProfileUpdateView.as_view(), name='profile-redact'),
 ]
