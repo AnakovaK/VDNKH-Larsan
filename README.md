@@ -34,6 +34,8 @@ python manage.py migrate
 9. Создать конфигурацию запуска в PyCharm (файл manage.py, опция runserver)
 
 ### Документация используемых инструментов
+
 - https://docs.djangoproject.com/en/4.1/
 - https://postgrespro.ru/docs/postgresql
 - https://getbootstrap.com/docs/4.1/getting-started/introduction/
+- https://pypi.org/project/psycopg2/
