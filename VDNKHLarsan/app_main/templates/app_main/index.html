@@ -1,4 +1,5 @@
 {% extends "app_main/base.html" %}
+{% load static %}
 {% block content %}
 <html lang="en">
 <head>
@@ -94,14 +95,19 @@
 </div>
   <h1>Главная страница</h1>
 	{% if request.user.is_authenticated %}
-		<h2>Добро пожаловать, <a href="#">Пользователь!
+		<h2>Добро пожаловать, <a href="#">Пользователь!</a>
 		<a href="#">Выйти</a><br>
 	{% else %}
 		<h2>Вы не авторизованы на сайте, пожалуйста войдите в учётную запись:</h2>
 		<a href="#">Войти</a>
 		<p>Нет учётной записи? <a href="#">Зарегистрируйтесь!</a></p>
 	{% endif %}
+			<div id="map" style="width: 600px; height: 400px"></div>
 </body>
 
 </html>
+{% endblock %}
+
+{% block extra_js %}
+<script src="{% static 'js/map.js' %}"></script>
 {% endblock %}
