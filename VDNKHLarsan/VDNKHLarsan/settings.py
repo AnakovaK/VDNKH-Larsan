@@ -10,17 +10,23 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.0/ref/settings/
 """
 
+from dotenv import load_dotenv
 from pathlib import Path
+import os
+
+load_dotenv()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-#1)fhs+e!4p)q)#%mc-i5ah7wm=v+yg@4m=jf@9&if#hw1b+j0'
+SECRET_KEY = os.environ.get(
+    'DJANGO_SECRET_KEY',
+    'veihft0#tlmmdgz+4gs5b&spa2-_k-=c8b095c-u3j!m0+%zk0'
+)
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -78,11 +84,14 @@ WSGI_APPLICATION = 'VDNKHLarsan.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'vdnkhdb',
+        'USER': os.getenv('DJANGO_DATABASE_USERNAME', 'define me!'),
+        'PASSWORD': os.getenv('DJANGO_DATABASE_PASSWORD', 'define me!'),
+        'HOST': os.getenv('DJANGO_DATABASE_HOST', '0.0.0.0'),
+        'PORT': '5432'
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/4.0/ref/settings/#auth-password-validators
@@ -127,3 +136,4 @@ STATICFILES_DIRS = [
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
