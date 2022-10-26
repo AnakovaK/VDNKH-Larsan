@@ -1,6 +1,9 @@
 #Site Engine
 Django==4.0.2
 
+#Database
+psycopg2==2.7
+
 #Forms
 django-crispy-forms==1.13.0
 crispy-bootstrap5==0.6
