@@ -32,7 +32,7 @@ class MyLoginView(LoginView):
 
 class MyLogoutView(LogoutView):
     template_name = 'app_users/logout.html'
-    next_page = reverse_lazy('login')
+    next_page = reverse_lazy('home')
 
 
 class ProfileDetailView(DetailView):
@@ -42,10 +42,10 @@ class ProfileDetailView(DetailView):
 
 
 class ProfileUpdateView(UpdateView):
-    template_name = 'app_users/profile_redact.html'
+    template_name = 'app_users/redact.html'
     model = User
     context_object_name = 'user'
-    fields = ('about', 'avatar')
+    fields = ("username", "first_name", "last_name", "email")
 
     def get_success_url(self):
         return reverse('profile', kwargs={'pk': self.object.id})

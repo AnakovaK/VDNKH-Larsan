@@ -7,6 +7,7 @@
 <body>
 	<a href="{% url 'home' %}">На главную</a>
 	<h1>{{ user.username }} <{{user.id}}></h1>
+	<a href="{% url 'profile-redact' user.id %}">Редактировать</a>
 	<a href="{% url 'logout' %}">Выйти</a>
 	<p>Имя: {{ user.first_name }}</p>
 	<p>Фамилия: {{ user.last_name }}</p>

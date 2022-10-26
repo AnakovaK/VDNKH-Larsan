@@ -1,7 +1,8 @@
 {% extends "app_main/base.html" %}
+
+{% block title %}<title>Главная</title>{% endblock %}
+
 {% block content %}
-<html lang="en">
-<head>
 	<style>
 @keyframes cf4FadeInOut {
  0% {
@@ -81,9 +82,6 @@
 }
 
 </style>
-<meta charset="UTF-8">
-<title>Главная</title>
-</head>
 
 <body>
 <div id="cf4a" class="shadow">
@@ -92,16 +90,13 @@
   <img src="https://img.freepik.com/free-photo/forest-glade-against-the-background-of-a-pine-forest-summer-sunset-background-blue-sky-with-clouds-natural-landscape_166373-1666.jpg?w=2000">
   <img src="https://scientificrussia.ru/images/n/6wn-large.jpg">
 </div>
-  <h1>Главная страница</h1>
-	{% if request.user.is_authenticated %}
-		<h2>Добро пожаловать, <a href="#">Пользователь!
-		<a href="#">Выйти</a><br>
-	{% else %}
-		<h2>Вы не авторизованы на сайте, пожалуйста войдите в учётную запись:</h2>
-		<a href="#">Войти</a>
-		<p>Нет учётной записи? <a href="#">Зарегистрируйтесь!</a></p>
-	{% endif %}
-</body>
-
-</html>
+<h1>Главная страница</h1>
+{% if request.user.is_authenticated %}
+	<h2>Добро пожаловать, <a href="{% url 'profile' user.id %}">{{ user.username }}!</a></h2>
+	<a href="{% url 'logout' %}">Выйти</a><br>
+{% else %}
+	<h2>Вы не авторизованы на сайте, пожалуйста войдите в учётную запись:</h2>
+	<a href="{% url 'login' %}">Войти</a>
+	<p>Нет учётной записи? <a href="{% url 'sign-up' %}">Зарегистрируйтесь!</a></p>
+{% endif %}
 {% endblock %}

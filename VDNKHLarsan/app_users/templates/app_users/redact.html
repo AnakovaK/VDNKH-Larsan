@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+{% load static %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/forms.css' %}">
+{% endblock %}
+
+<html lang="ru">
+<head>
+	<meta charset="UTF-8">
+	<title>Редактировать профиль</title>
+	<link rel="stylesheet" href="{% static 'css/forms.css' %}">
+</head>
+<body>
+	<a href="{% url 'profile' user.id %}">Назад</a>
+	<h1>Редактировать профиль</h1>
+	<form action="{% url 'profile-redact' user.id %}" method="post">
+		{% csrf_token %}
+
+		{{ form.non_field_errors }}
+
+		<div class="form__field">
+			<label class="form__label" for="{{ form.username.id_for_label }}">{{ form.username.label }}:</label>
+			<input class="form__input" type="text" name="" id="{{ form.username.id_for_label }}" value="{{ form.username.value }}">
+			{% if field.help_text %}
+        <p class="help">{{ field.help_text|safe }}</p>
+			{% endif %}
+			{{ username.subject.errors }}
+		</div>
+
+		<div class="form__field">
+			<label class="form__label" for="{{ form.first_name.id_for_label }}">{{ form.first_name.label }}:</label>
+			<input class="form__input" type="text" name="" id="{{ form.first_name.id_for_label }}" value="{{ form.first_name.value }}">
+			{% if field.help_text %}
+        <p class="help">{{ field.help_text|safe }}</p>
+			{% endif %}
+			{{ first_name.subject.errors }}
+		</div>
+
+		<div class="form__field">
+			<label class="form__label" for="{{ form.last_name.id_for_label }}">{{ form.last_name.label }}:</label>
+			<input class="form__input" type="text" name="" id="{{ form.last_name.id_for_label }}" value="{{ form.last_name.value }}">
+			{% if field.help_text %}
+        <p class="help">{{ field.help_text|safe }}</p>
+			{% endif %}
+			{{ last_name.subject.errors }}
+		</div>
+
+		<div class="form__field">
+			<label class="form__label" for="{{ form.email.id_for_label }}">{{ form.email.label }}:</label>
+			<input class="form__input" type="text" name="" id="{{ form.email.id_for_label }}" value="{{ form.email.value }}">
+			{% if field.help_text %}
+        <p class="help">{{ field.help_text|safe }}</p>
+			{% endif %}
+			{{ email.subject.errors }}
+		</div>
+
+		<button type="submit">Изменить</button>
+	</form>
+</body>
+</html>

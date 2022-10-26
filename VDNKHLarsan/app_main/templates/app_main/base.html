@@ -1,5 +1,5 @@
-{% load static %}
 <!DOCTYPE html>
+{% load static %}
 <html lang="ru">
 <head>
     <!-- Required meta tags -->
@@ -13,6 +13,7 @@
     {% block extra_css %} {% endblock %}
     <link href="https://getbootstrap.com/docs/5.1/examples/sticky-footer-navbar/sticky-footer-navbar.css"
           rel="stylesheet">
+    {% block title %}{% endblock %}
 </head>
 <body class="d-flex flex-column h-100">
 {% include 'app_main/menu.html' %}
