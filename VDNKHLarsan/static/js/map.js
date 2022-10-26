@@ -10,7 +10,7 @@ function init () {
 
     myMap = new ymaps.Map('map', {
         center: [55.832135, 37.628041],
-        zoom: 14,
+        zoom: 15    ,
         // controls: ['smallMapDefaultSet']
     },
         // {
@@ -22,16 +22,23 @@ function init () {
         searchControlProvider: 'yandex#search'}
     );
 
+    placeKeys = Object.keys(places)
+    for (var placeKey in placeKeys) {
 
-    for (var place in Object.values(places)) {
-        console.log(place.geometry.coordinates.reverse())
-
+            var place = places[parseInt(placeKeys[placeKey])]
+            console.log(place.geometry.coordinates)
+            myMap.geoObjects.add(new ymaps.Placemark(place.geometry.coordinates.reverse(),{
+             balloonContentHeader: '',
+             balloonContentBody: "Содержимое <em>балуна</em> метки",
+             balloonContentFooter: "Подвал",
+             hintContent: "Хинт метки"
+         }))
 
     }
 
-    // foreach(places, (index, place) => {
-    //     console.log(place.geometry.coordinates.reverse())
-    //     myMap.geoObjects.add(new ymaps.Placemark(place.geometry.coordinates.reverse(),{
+    // foreach(places, (index, placeKey) => {
+    //     console.log(placeKey.geometry.coordinates.reverse())
+    //     myMap.geoObjects.add(new ymaps.Placemark(placeKey.geometry.coordinates.reverse(),{
     //         balloonContentHeader: "Балун метки",
     //         balloonContentBody: "Содержимое <em>балуна</em> метки",
     //         balloonContentFooter: "Подвал",
