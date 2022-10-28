@@ -1,14 +1,15 @@
-<!DOCTYPE html>
+{% extends "app_main/base.html" %}
 {% load static %}
-<html lang="ru">
-<head>
-	<meta charset="UTF-8">
-	<title>Регистрация</title>
-	<link rel="stylesheet" href="{% static 'css/fonts.css' %}">
-	<link rel="stylesheet" href="{% static 'css/main.css' %}">
-	<link rel="stylesheet" href="{% static 'css/forms.css' %}">
-</head>
-<body>
+
+{% block title %}
+<title>Регистрация</title>
+{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/forms.css' %}">
+{% endblock %}
+  
+{% block content %}
 	<a href="{% url 'home' %}">На главную</a>
 	<h1>Регистрация</h1>
 	<form class="form" action="{% url 'sign-up' %}" method="post">
@@ -34,16 +35,8 @@
 
 		<button class="form__submit-btn btn-reset" type="submit">Зарегистрироваться</button>
 	</form>
-</body>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
-<script>
-	window.onload = () => {
-		{% for input in form %}
-			console.log('{{ input.id_for_label }}')
-			{% if input.errors %}
-				document.getElementById('{{ input.id_for_label }}-underline').classList.add('form__input-underline_red')
-			{% endif %}
-		{% endfor %}
-	};
-</script>
-</html>
+{% endblock %}
+
+{% block extra_js %}
+{% include 'app_main/form-script.html' %}
+{% endblock %}
