@@ -12,5 +12,12 @@
 	<p>Имя: {{ user.first_name }}</p>
 	<p>Фамилия: {{ user.last_name }}</p>
 	<p>{{ user.email }}</p>
+	<button type="button" class="btn btn-outline-primary">Primary</button>
+	<ul>
+		<p>Отмеченные вами интересы:</p>
+	{% for tag in user.visitor.tags.all %}
+		<p>{{ tag }}</p>
+	{% endfor %}
+	</ul>
 </body>
 </html>

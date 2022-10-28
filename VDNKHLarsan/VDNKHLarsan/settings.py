@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'app_main',
     'app_users',
+    'taggit',
 ]
 
 MIDDLEWARE = [
@@ -84,7 +85,7 @@ WSGI_APPLICATION = 'VDNKHLarsan.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'vdnkhdb',
+        'NAME': os.getenv('DJANGO_DATABASE_NAME', 'define me!'),
         'USER': os.getenv('DJANGO_DATABASE_USERNAME', 'define me!'),
         'PASSWORD': os.getenv('DJANGO_DATABASE_PASSWORD', 'define me!'),
         'HOST': os.getenv('DJANGO_DATABASE_HOST', '0.0.0.0'),

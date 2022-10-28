@@ -92,6 +92,7 @@
 <h1>Главная страница</h1>
 {% if request.user.is_authenticated %}
 	<h2>Добро пожаловать, <a href="{% url 'profile' user.id %}">{{ user.username }}!</a></h2>
+	<a href="{% url 'profile' user.id %}">Добавить интересы</a><br>
 	<a href="{% url 'logout' %}">Выйти</a><br>
 {% else %}
 	<h2>Вы не авторизованы на сайте, пожалуйста войдите в учётную запись:</h2>
