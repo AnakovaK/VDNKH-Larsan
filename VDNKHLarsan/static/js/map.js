@@ -8,10 +8,31 @@ ymaps.ready(init);
 
 function init () {
 
+    var MQLayer = function () {
+    var layer = new ymaps.Layer('https://api.maptiler.com/maps/outdoor/%z/%x/%y.png?key=KMWOM1cg8sVU6qvP43lH', {
+        projection: ymaps.projection.sphericalMercator
+    })
+            layer.getCopyrights = function () {
+            return ymaps.vow.resolve('Я насрал');
+        };
+        // Доступные уровни зума
+            layer.getZoomRange = function () {
+            return ymaps.vow.resolve([0, 19]);
+        };
+
+        return layer;
+    };
+    // Добавляем слой с ключем.
+    ymaps.layer.storage.add('mq#aerial', MQLayer);
+    // Создаем тип карты, состоящий из слове 'mq#aerial' и 'yandex#skeleton'
+    var myMapType = new ymaps.MapType('MQ + Ya', ['mq#aerial']);
+    // Добавим в хранилище типов карты
+    ymaps.mapType.storage.add(myMapType);
+
     myMap = new ymaps.Map('map', {
-        center: [55.832135, 37.628041],
-        zoom: 15    ,
-         controls: ['smallMapDefaultSet']
+            center: [55.832135, 37.628041],
+            zoom: 15,
+            controls: ['smallMapDefaultSet']
     },
         {
         restrictMapArea: [
@@ -22,49 +43,86 @@ function init () {
         searchControlProvider: 'yandex#search'}
     );
 
+    myMap.setType(myMapType);
+
+    objectManager = new ymaps.ObjectManager({
+        clusterize: true,
+    })
+
     placeKeys = Object.keys(places)
     for (var placeKey in placeKeys) {
             var place = places[parseInt(placeKeys[placeKey])]
             placemarkIconsInactive[placeKey] = "static/img/icons/inactive/" + place.properties.icon + ".svg"
             placemarkIconsActive[placeKey] = "static/img/icons/active/" + place.properties.icon + "-active.svg"
-            placemarkToAdd = new ymaps.Placemark(place.geometry.coordinates.reverse(),{
-                balloonContentHeader: '',
-                balloonContentBody: "Содержимое <em>балуна</em> метки",
-                balloonContentFooter: "Подвал",
-                hintContent: "Хинт метки",
-
-            },{
-                iconLayout: 'default#image',
+            objectManager.add({
+                type: 'Feature',
+                id: placeKey,
+                geometry: {
+                    type: 'Point',
+                    coordinates: place.geometry.coordinates.reverse()
+                },
+                properties: {
+                    balloonContentHeader: '',
+                    balloonContentBody: "Содержимое <em>балуна</em> метки",
+                    balloonContentFooter: "Подвал",
+                    hintContent: "Хинт метки",
+                },
+                options: {
+                    iconLayout: 'default#image',
                 iconImageHref: placemarkIconsInactive[placeKey],
                 iconImageSize: [25, 35],
                 hideIconOnBalloonOpen: false,
-
+                }
             })
-            myMap.geoObjects.add(placemarkToAdd);
-            placemarks[placeKey] = placemarkToAdd;
+
 
     }
-     for (let i = 0; i < placemarks.length; i++) {
-         placemarks[i].events
-                 .add('balloonopen', function (e){
-                     e.get('target').options.set('iconImageHref', placemarkIconsActive[i]);
-                     e.get('target').options.set('iconImageSize', [35, 45]);
-                     console.log(places[parseInt(placeKeys[i])].geometry.coordinates.reverse())
-                     myMap.setCenter(places[parseInt(placeKeys[i])].geometry.coordinates.reverse(), 17, {
-                         duration: 400
-                     })
+     // for (let i = 0; i < placemarks.length; i++) {
+     //     placemarks[i].events
+     //             .add('balloonopen', function (e){
+     //                 e.get('target').options.set('iconImageHref', placemarkIconsActive[i]);
+     //                 e.get('target').options.set('iconImageSize', [35, 45]);
+     //                 console.log(places[parseInt(placeKeys[i])].geometry.coordinates.reverse())
+     //                 myMap.setCenter(places[parseInt(placeKeys[i])].geometry.coordinates.reverse(), 17, {
+     //                     duration: 400
+     //                 })
+     //
+     //             })
+     //             .add('balloonclose', function (e){
+     //                 e.get('target').options.set('iconImageHref', placemarkIconsInactive[i]);
+     //                 e.get('target').options.set('iconImageSize', [25, 35]);
+     //                 myMap.setCenter([55.832135, 37.628041], 15, {
+     //                     duration: 300
+     //                 })
+     //             })
+     // }
+     myMap.geoObjects.add(objectManager)
 
-                 })
-                 .add('balloonclose', function (e){
-                     e.get('target').options.set('iconImageHref', placemarkIconsInactive[i]);
-                     e.get('target').options.set('iconImageSize', [25, 35]);
-                     myMap.setCenter([55.832135, 37.628041], 15, {
-                         duration: 300
-                     })
-                 })
-     }
+    objectManager.objects.events.add(['balloonopen', 'balloonclose'], onObjectEvent);
 
+     console.log(objectManager)
 
+    function onObjectEvent (e){
+    var objectId = e.get('objectId');
+    if (e.get('type') == 'balloonopen'){
+        objectManager.objects.setObjectOptions(objectId, {
+            iconImageHref: placemarkIconsActive[objectId],
+            iconImageSize: [35, 45]
+        })
+        myMap.setCenter(places[parseInt(placeKeys[objectId])].geometry.coordinates.reverse(), 17, {
+            duration: 400
+        })
+    }
+    if (e.get('type') == 'balloonclose'){
+        objectManager.objects.setObjectOptions(objectId, {
+            iconImageHref: placemarkIconsInactive[objectId],
+            iconImageSize: [25, 35]
+        })
+        myMap.setCenter([55.832135, 37.628041], 15, {
+            duration: 300
+        })
+    }
+}
 
 
     myMap.controls.remove("trafficControl")
@@ -74,6 +132,8 @@ function init () {
 
 
 }
+
+
 
 /*
 var animatedLayout = ymaps.templateLayoutFactory.createClass(
