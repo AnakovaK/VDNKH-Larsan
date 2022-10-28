@@ -44,7 +44,7 @@ class ProfileDetailView(DetailView):
 class ProfileUpdateView(UpdateView):
     template_name = 'app_users/redact.html'
     model = User
-    context_object_name = 'user'
+    context_object_name = 'profile'
     fields = ("username", "first_name", "last_name", "email")
 
     def get_success_url(self):
