@@ -1,24 +1,115 @@
-.form__field:not(:last-child) {
-    margin-bottom: 32px;
+.form {
+  max-width: 420px;
+}
+
+.form__field {
+  margin-bottom: 32px;
 }
 
 .form__label {
-    display: block;
-    font-weight: 500;
-    font-size: 18px;
-    line-height: 24px;
-    margin-bottom: 8px;
+  position: relative;
+  display: block;
+  font-family: 'Suisse Intl', sans-serif;
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 24px;
+  margin-bottom: 8px;
 }
 
+
 .form__input {
-    padding: 10px 16px 14px;
-    border: none;
-    width: 420px;
-    border-radius: 4px;
-    background: #f5f5f5;
-    font-weight: 400;
-    font-size: 18px;
-    line-height: 24px;
-    color: #262626;
-    caret-color: #285de8;
+  position: relative;
+  padding: 10px 16px 14px;
+  border: none;
+  width: 100%;
+  border-radius: 4px;
+  background: #f5f5f5;
+  font-family: 'Suisse Intl', sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 24px;
+  color: #262626;
+  caret-color: #285de8;
+}
+
+.form__input:focus {
+  border: none;
+  outline: none;
+}
+
+.form__input-underline {
+  position: relative;
+}
+
+.form__input-underline::after {
+  content: "";
+  opacity: 0;
+  position: absolute;
+  bottom: 0px;
+  left: 0px;
+  width: 100%;
+  height: 2px;
+  background-color: rgba(38, 38, 38, 0.2);
+  transition: opacity 0.4s ease-in-out, background-color 0.4s ease-in-out;
+}
+
+.form__input:hover + .form__input-underline::after {
+  background-color: rgba(38, 38, 38, 0.2);
+  opacity: 1;
+}
+
+.form__input:focus + .form__input-underline::after {
+  background-color: #285DE8;
+  opacity: 1;
+}
+
+.form__input-underline_red::after {
+  content: "";
+  opacity: 1;
+  background-color: #e22c38;
+}
+
+.form__fields-error {
+  margin-top: 4px;
+  padding: 10px 20px;
+  background-color: #262626;
+  border-radius: 4px;
+  font-family: 'Suisse Intl', sans-serif;
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 24px;
+  color: #fff;
+}
+
+.form__fields-error::before {
+  content: url('/static/img/form-fields-error-icon.svg');
+  display: inline-block;
+  position: relative;
+  top: 2px;
+  margin-right: 12px;
+}
+
+.form__submit-btn {
+  padding: 13px 110px;
+  background-color: #285DE8;
+  border-radius: 4px;
+  font-family: 'Suisse Intl', sans-serif;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 20px;
+  color: #fff;
+  transition: background-color 0.4s ease-in-out;
+}
+
+.form__submit-btn:focus {
+  background-color: #336af7;
+}
+
+.form__submit-btn:hover {
+  background-color: #3484fc;
+}
+
+.form__submit-btn:active {
+  background-color: #005fff;
 }

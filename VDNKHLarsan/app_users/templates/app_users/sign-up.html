@@ -1,16 +1,49 @@
 <!DOCTYPE html>
-<html lang="en">
+{% load static %}
+<html lang="ru">
 <head>
 	<meta charset="UTF-8">
 	<title>Регистрация</title>
+	<link rel="stylesheet" href="{% static 'css/fonts.css' %}">
+	<link rel="stylesheet" href="{% static 'css/main.css' %}">
+	<link rel="stylesheet" href="{% static 'css/forms.css' %}">
 </head>
 <body>
 	<a href="{% url 'home' %}">На главную</a>
 	<h1>Регистрация</h1>
-	<form action="{% url 'sign-up' %}" method="post">
+	<form class="form" action="{% url 'sign-up' %}" method="post">
 		{% csrf_token %}
-		{{ form.as_p }}
-		<button type="submit">Зарегистрироваться</button>
+
+		{{ form.non_field_errors }}
+
+		{% for input in form %}
+		<div class="form__field">
+			<label class="form__label" for="{{ input.id_for_label }}">{{ input.label }}:</label>
+			{{ input }}
+			<div class="form__input-underline" id="{{ input.id_for_label }}-underline"></div>
+			{% if input.help_text %}
+				{{ input.help_text|safe }}
+			{% endif %}
+			<ul class="form__errors-wrapper list-reset">
+				{% for err in input.errors %}
+					<li class="form__fields-error">{{ err }}</li>
+				{% endfor %}
+			</ul>
+		</div>
+		{% endfor %}
+
+		<button class="form__submit-btn btn-reset" type="submit">Зарегистрироваться</button>
 	</form>
 </body>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+<script>
+	window.onload = () => {
+		{% for input in form %}
+			console.log('{{ input.id_for_label }}')
+			{% if input.errors %}
+				document.getElementById('{{ input.id_for_label }}-underline').classList.add('form__input-underline_red')
+			{% endif %}
+		{% endfor %}
+	};
+</script>
 </html>

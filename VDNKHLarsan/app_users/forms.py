@@ -11,6 +11,11 @@ class SignUpForm(UserCreationForm):
         model = User
         fields = ('username', 'password1', 'password2', 'first_name', 'last_name', 'email')
 
+    def __init__(self, *args, **kwargs):
+        super(SignUpForm, self).__init__(*args, **kwargs)
+        for visible in self.visible_fields():
+            visible.field.widget.attrs['class'] = 'form__input'
+
 
 class WalkRequirementsForm(forms.Form):
     WALKING = (
