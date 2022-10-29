@@ -30,3 +30,6 @@ class Visitor(models.Model):
         Метод работает в паре с методом создания посетителя. Сохраняет в базе данных "посетителя".
         """
         instance.visitor.save()
+
+    def get_tags(self):
+        return self.tags

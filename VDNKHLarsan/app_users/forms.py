@@ -37,3 +37,7 @@ class WalkRequirementsForm(forms.Form):
     type_of_walking = forms.ChoiceField(choices=WALKING)
     money = forms.ChoiceField(choices=MONEY)
     movement = forms.ChoiceField(choices=MOVEMENT)
+
+
+class ChoiceForm(forms.Form):
+    choice = forms.CharField()
