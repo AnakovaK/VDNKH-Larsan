@@ -13,7 +13,7 @@ function init () {
         projection: ymaps.projection.sphericalMercator
     })
             layer.getCopyrights = function () {
-            return ymaps.vow.resolve('Я насрал');
+            return ymaps.vow.resolve('');
         };
         // Доступные уровни зума
             layer.getZoomRange = function () {
@@ -22,9 +22,7 @@ function init () {
 
         return layer;
     };
-    // Добавляем слой с ключем.
     ymaps.layer.storage.add('mq#aerial', MQLayer);
-    // Создаем тип карты, состоящий из слове 'mq#aerial' и 'yandex#skeleton'
     var myMapType = new ymaps.MapType('MQ + Ya', ['mq#aerial']);
     // Добавим в хранилище типов карты
     ymaps.mapType.storage.add(myMapType);
@@ -46,7 +44,7 @@ function init () {
     myMap.setType(myMapType);
 
     objectManager = new ymaps.ObjectManager({
-        clusterize: true,
+        clusterize: false,
     })
 
     placeKeys = Object.keys(places)
@@ -62,7 +60,7 @@ function init () {
                     coordinates: place.geometry.coordinates.reverse()
                 },
                 properties: {
-                    balloonContentHeader: '',
+                    balloonContentHeader: place.properties.title,
                     balloonContentBody: "Содержимое <em>балуна</em> метки",
                     balloonContentFooter: "Подвал",
                     hintContent: "Хинт метки",
@@ -98,31 +96,35 @@ function init () {
      // }
      myMap.geoObjects.add(objectManager)
 
-    objectManager.objects.events.add(['balloonopen', 'balloonclose'], onObjectEvent);
+
 
      console.log(objectManager)
 
     function onObjectEvent (e){
-    var objectId = e.get('objectId');
-    if (e.get('type') == 'balloonopen'){
-        objectManager.objects.setObjectOptions(objectId, {
-            iconImageHref: placemarkIconsActive[objectId],
-            iconImageSize: [35, 45]
-        })
-        myMap.setCenter(places[parseInt(placeKeys[objectId])].geometry.coordinates.reverse(), 17, {
-            duration: 400
-        })
-    }
-    if (e.get('type') == 'balloonclose'){
-        objectManager.objects.setObjectOptions(objectId, {
-            iconImageHref: placemarkIconsInactive[objectId],
-            iconImageSize: [25, 35]
-        })
-        myMap.setCenter([55.832135, 37.628041], 15, {
-            duration: 300
-        })
-    }
+         var objectId = e.get('objectId');
+         console.log(places[parseInt(placeKeys[objectId])].geometry.coordinates.reverse())
+         if (e.get('type') == 'balloonopen'){
+              objectManager.objects.setObjectOptions(objectId, {
+                  iconImageHref: placemarkIconsActive[objectId],
+                  iconImageSize: [35, 45]
+              })
+             myMap.setCenter(places[parseInt(placeKeys[objectId])].geometry.coordinates.reverse(), 17, {
+                 duration: 400
+             })
+         }
+         else if (e.get('type') == 'balloonclose'){
+              objectManager.objects.setObjectOptions(objectId, {
+                  iconImageHref: placemarkIconsInactive[objectId],
+                  iconImageSize: [25, 35]
+              })
+             myMap.setCenter([55.832135, 37.628041], 15, {
+                 duration: 300
+             })
+         }
+
+
 }
+    objectManager.objects.events.add(['balloonopen', 'balloonclose'], onObjectEvent);
 
 
     myMap.controls.remove("trafficControl")
