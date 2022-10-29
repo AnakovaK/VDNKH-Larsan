@@ -3,28 +3,30 @@ var ADDRESS_PREFIX = "http://vdnh.ru/";
 var placemarks = [];
 var placemarkIconsInactive = [];
 var placemarkIconsActive = [];
+var listBoxItems = [];
 
 ymaps.ready(init);
 
 function init () {
 
     var MQLayer = function () {
-    var layer = new ymaps.Layer('https://api.maptiler.com/maps/outdoor/%z/%x/%y.png?key=KMWOM1cg8sVU6qvP43lH', {
-        projection: ymaps.projection.sphericalMercator
-    })
-            layer.getCopyrights = function () {
-            return ymaps.vow.resolve('');
-        };
-        // Доступные уровни зума
-            layer.getZoomRange = function () {
-            return ymaps.vow.resolve([0, 19]);
-        };
+        var layer = new ymaps.Layer('https://api.maptiler.com/maps/outdoor/%z/%x/%y.png?key=KMWOM1cg8sVU6qvP43lH', {
+            projection: ymaps.projection.sphericalMercator
+        })
+                layer.getCopyrights = function () {
+                return ymaps.vow.resolve('');
+            };
+                layer.getZoomRange = function () {
+                return ymaps.vow.resolve([0, 19]);
+            };
 
-        return layer;
+            return layer;
     };
+
     ymaps.layer.storage.add('mq#aerial', MQLayer);
+
     var myMapType = new ymaps.MapType('MQ + Ya', ['mq#aerial']);
-    // Добавим в хранилище типов карты
+
     ymaps.mapType.storage.add(myMapType);
 
     myMap = new ymaps.Map('map', {
@@ -43,12 +45,12 @@ function init () {
 
     myMap.setType(myMapType);
 
-    objectManager = new ymaps.ObjectManager({
-        clusterize: false,
-    })
+    objectManager = new ymaps.ObjectManager({})
 
     placeKeys = Object.keys(places)
+    cnt = 0;
     for (var placeKey in placeKeys) {
+
             var place = places[parseInt(placeKeys[placeKey])]
             placemarkIconsInactive[placeKey] = "static/img/icons/inactive/" + place.properties.icon + ".svg"
             placemarkIconsActive[placeKey] = "static/img/icons/active/" + place.properties.icon + "-active.svg"
@@ -60,45 +62,24 @@ function init () {
                     coordinates: place.geometry.coordinates.reverse()
                 },
                 properties: {
-                    balloonContentHeader: place.properties.title,
+                    balloonContentHeader: place.properties.type_s1,
                     balloonContentBody: "Содержимое <em>балуна</em> метки",
                     balloonContentFooter: "Подвал",
-                    hintContent: "Хинт метки",
+                    hintContent: place.properties.icon,
                 },
                 options: {
                     iconLayout: 'default#image',
-                iconImageHref: placemarkIconsInactive[placeKey],
-                iconImageSize: [25, 35],
-                hideIconOnBalloonOpen: false,
+                    iconImageHref: placemarkIconsInactive[placeKey],
+                    iconImageSize: [25, 35],
+                    hideIconOnBalloonOpen: false,
                 }
             })
 
 
     }
-     // for (let i = 0; i < placemarks.length; i++) {
-     //     placemarks[i].events
-     //             .add('balloonopen', function (e){
-     //                 e.get('target').options.set('iconImageHref', placemarkIconsActive[i]);
-     //                 e.get('target').options.set('iconImageSize', [35, 45]);
-     //                 console.log(places[parseInt(placeKeys[i])].geometry.coordinates.reverse())
-     //                 myMap.setCenter(places[parseInt(placeKeys[i])].geometry.coordinates.reverse(), 17, {
-     //                     duration: 400
-     //                 })
-     //
-     //             })
-     //             .add('balloonclose', function (e){
-     //                 e.get('target').options.set('iconImageHref', placemarkIconsInactive[i]);
-     //                 e.get('target').options.set('iconImageSize', [25, 35]);
-     //                 myMap.setCenter([55.832135, 37.628041], 15, {
-     //                     duration: 300
-     //                 })
-     //             })
-     // }
-     myMap.geoObjects.add(objectManager)
 
-
-
-     console.log(objectManager)
+    myMap.geoObjects.add(objectManager)
+    console.log(objectManager)
 
     function onObjectEvent (e){
          var objectId = e.get('objectId');
@@ -124,7 +105,60 @@ function init () {
 
 
 }
+    console.log(listBoxItems)
+
     objectManager.objects.events.add(['balloonopen', 'balloonclose'], onObjectEvent);
+
+    listBoxItems = ['Павильон', 'Въезд', 'Еда', 'Развлечения', 'Музей']
+            .map(function (title) {
+                return new ymaps.control.ListBoxItem({
+                    data: {
+                        content: title
+                    },
+                    state: {
+                        selected: true
+                    }
+                })
+            }),
+        reducer = function (filters, filter) {
+            filters[filter.data.get('content')] = filter.isSelected();
+            return filters;
+        },
+        // Теперь создадим список, содержащий 5 пунктов.
+        listBoxControl = new ymaps.control.ListBox({
+            data: {
+                content: 'Фильтр',
+                title: 'Фильтр'
+            },
+            items: listBoxItems,
+            state: {
+                // Признак, развернут ли список.
+                expanded: true,
+                filters: listBoxItems.reduce(reducer, {})
+            }
+        });
+    myMap.controls.add(listBoxControl);
+
+    // Добавим отслеживание изменения признака, выбран ли пункт списка.
+    listBoxControl.events.add(['select', 'deselect'], function (e) {
+        var listBoxItem = e.get('target');
+        var filters = ymaps.util.extend({}, listBoxControl.state.get('filters'));
+        filters[listBoxItem.data.get('content')] = listBoxItem.isSelected();
+        listBoxControl.state.set('filters', filters);
+    });
+
+    var filterMonitor = new ymaps.Monitor(listBoxControl.state);
+    filterMonitor.add('filters', function (filters) {
+        // Применим фильтр.
+        objectManager.setFilter(getFilterFunction(filters));
+    });
+
+    function getFilterFunction(categories) {
+        return function (obj) {
+            var content = obj.properties.balloonContentHeader;
+                return categories[content]
+        }
+    }
 
 
     myMap.controls.remove("trafficControl")
@@ -136,41 +170,3 @@ function init () {
 }
 
 
-
-/*
-var animatedLayout = ymaps.templateLayoutFactory.createClass(
-                '<div class = "placemark"></div>',
-                {
-                    build: function (){
-                        animatedLayout.superclass.build().call(this);
-                        var element = this.getParentElement().getElementsByClassName('placemark')[0];
-                        var size = this.isActive ? 60 : 34;
-                        var smallIcon = new ymaps.Placemark([0, 0],
-                            {
-                                iconLayout: 'default#imageWithContent',
-                                iconImageHref: "static/img/icons/inactive/" + place.properties.icon + ".svg",
-                                iconImageSize: [20, 30],
-                            })
-                        var bigIcon = new ymaps.Placemark([0, -30],{
-                            iconLayout: 'default#imageWithContent',
-                            iconImageHref: "static/img/icons/active/" + place.properties.icon + ".svg",
-                            iconImageSize: [25, 35],
-                        })
-                        this.getData().options.set('icon', this.isActive ? bigIcon : smallIcon);
-
-                        if (this.isActive){
-                            element.classList.add("active");
-                            element.style.animation = ".35s show-big-placemark";
-                        } else if (this.inited){
-                            element.classList.remove("active");
-                            element.style.animation = ".35s show-small-placemark"
-                        }
-                        if (!this.inited){
-                            this.inited = true;
-                            this.isActive = false;
-                            this.getData().geoObject.events.add('click', function (){
-                                this.isActive = !this.isActive;
-                                this.rebuild();
-                            }, this);
-                        }
-                    }*/
