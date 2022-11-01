@@ -13,7 +13,7 @@ class LoginForm(AuthenticationForm):
 
 class SignUpForm(UserCreationForm):
     patronymic = forms.CharField(widget=forms.TextInput())
-    is_moscowian = forms.ChoiceField(widget=forms.CheckboxInput())
+    is_moscowian = forms.ChoiceField(widget=forms.CheckboxInput(attrs={'class': 'form__checkbox '}))
 
     class Meta:
         model = User
@@ -25,13 +25,13 @@ class SignUpForm(UserCreationForm):
             visible.field.widget.attrs['class'] = 'form__input'
 
 
-class ProfileForm(UserCreationForm):
-    patronymic = forms.CharField(widget=forms.TextInput())
-    is_moscowian = forms.ChoiceField(widget=forms.CheckboxInput())
+class ProfileForm(forms.ModelForm):
+    patronymic = forms.CharField(widget=forms.TextInput(), required=False)
+    is_moscowian = forms.BooleanField(widget=forms.CheckboxInput(), required=False)
 
     class Meta:
         model = User
-        fields = ('username', 'first_name', 'last_name', 'email')
+        fields = ('username', 'first_name', 'last_name', 'patronymic', 'email')
 
     def __init__(self, *args, **kwargs):
         super(ProfileForm, self).__init__(*args, **kwargs)

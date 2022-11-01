@@ -1,5 +1,8 @@
 .form {
-  max-width: 420px;
+  padding: 20px;
+  border-radius: 4px;
+  background-color: #fff;
+  font-family: 'Suisse Intl', sans-serif;
 }
 
 .form__field {
@@ -9,7 +12,6 @@
 .form__label {
   position: relative;
   display: block;
-  font-family: 'Suisse Intl', sans-serif;
   font-weight: 500;
   font-size: 18px;
   line-height: 24px;
@@ -24,7 +26,6 @@
   width: 100%;
   border-radius: 4px;
   background: #f5f5f5;
-  font-family: 'Suisse Intl', sans-serif;
   font-style: normal;
   font-weight: 400;
   font-size: 18px;
@@ -54,7 +55,7 @@
   transition: opacity 0.4s ease-in-out, background-color 0.4s ease-in-out;
 }
 
-.form__input:hover + .form__input-underline::after {
+.field__input:hover + .form__input-underline::after {
   background-color: rgba(38, 38, 38, 0.2);
   opacity: 1;
 }
@@ -70,7 +71,11 @@
   background-color: #e22c38;
 }
 
-.form__fields-error {
+.form__input:focus + .form__input-underline_red::after {
+  background-color: #D32A33;
+}
+
+.error {
   margin-top: 4px;
   padding: 10px 20px;
   background-color: #262626;
@@ -82,17 +87,18 @@
   color: #fff;
 }
 
-.form__fields-error::before {
+.error::before {
   content: url('/static/img/form-fields-error-icon.svg');
   display: inline-block;
   position: relative;
   top: 2px;
   margin-right: 12px;
+  align-self: center;
 }
 
 .form__submit-btn {
   padding: 13px 110px;
-  background-color: #285DE8;
+  background-color: #285de8;
   border-radius: 4px;
   font-family: 'Suisse Intl', sans-serif;
   font-weight: 400;
