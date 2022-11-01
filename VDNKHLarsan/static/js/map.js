@@ -124,7 +124,6 @@ function init () {
             filters[filter.data.get('content')] = filter.isSelected();
             return filters;
         },
-        // Теперь создадим список, содержащий 5 пунктов.
         listBoxControl = new ymaps.control.ListBox({
             data: {
                 content: 'Фильтр',
@@ -132,14 +131,12 @@ function init () {
             },
             items: listBoxItems,
             state: {
-                // Признак, развернут ли список.
                 expanded: true,
                 filters: listBoxItems.reduce(reducer, {})
             }
         });
     myMap.controls.add(listBoxControl);
 
-    // Добавим отслеживание изменения признака, выбран ли пункт списка.
     listBoxControl.events.add(['select', 'deselect'], function (e) {
         var listBoxItem = e.get('target');
         var filters = ymaps.util.extend({}, listBoxControl.state.get('filters'));
@@ -149,7 +146,6 @@ function init () {
 
     var filterMonitor = new ymaps.Monitor(listBoxControl.state);
     filterMonitor.add('filters', function (filters) {
-        // Применим фильтр.
         objectManager.setFilter(getFilterFunction(filters));
     });
 
