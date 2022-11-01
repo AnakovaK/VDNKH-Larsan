@@ -9,28 +9,47 @@
 <link rel="stylesheet" href="{% static 'css/forms.css' %}">
 {% endblock %}
 
+{% block top %}
+<div class="top">
+  <div class="container">
+    <h1 class="page-title">Войти</h1>
+    <p class="top__text" style="color:#fff">Нет учётной записи? <a style="text-decoration: underline;" href="{% url 'sign-up' %}">Зарегистрируйтесь!</a></p>
+  </div>
+</div>
+{% endblock %}
+
 {% block content %}
-	<a href="{% url 'home' %}">На главную</a>
-	<h1>Войти</h1>
-	<form class="form" action="{% url 'login' %}" method="post">
-		{% csrf_token %}
+<section class="section">
+  <div class="section__container container">
+    <a href="{% url 'home' %}">На главную</a>
+    <form class="form" action="{% url 'login' %}" method="post">
+      {% csrf_token %}
 
-		{{ form.non_field_errors }}
-		{% for input in form %}
-		<div class="form__field">
-			<label class="form__label" for="{{ input.id_for_label }}">{{ input.label }}:</label>
-			{{ input }}
-			<div class="form__input-underline" id="{{ input.id_for_label }}-underline"></div>
-			<ul class="form__errors-wrapper list-reset">
-				{% for err in input.errors %}
-					<li class="form__fields-error">{{ err }}</li>
-				{% endfor %}
-			</ul>
-		</div>
-		{% endfor %}
+      {% if form.non_field_errors %}
+      <ul class="form__field-error-list list-reset">
+        {% for err in form.non_field_errors %}
+        <li class="form__fields-error">{{ err|escape }}</li>
+        {% endfor %}
+      </ul>
+      {% endif %}
 
-		<button class="form__submit-btn btn-reset" type="submit">Войти</button>
-	</form>
+      {% for input in form %}
+      <div class="form__field">
+        <label class="form__label" for="{{ input.id_for_label }}">{{ input.label }}:</label>
+        {{ input }}
+        <div class="form__input-underline" id="{{ input.id_for_label }}-underline"></div>
+        <ul class="form__errors-wrapper list-reset">
+          {% for err in input.errors %}
+          <li class="form__fields-error">{{ err }}</li>
+          {% endfor %}
+        </ul>
+      </div>
+      {% endfor %}
+
+      <button class="form__submit-btn btn-reset" type="submit">Войти</button>
+    </form>
+  </div>
+</section>
 {% endblock %}
 
 {% block extra_js %}

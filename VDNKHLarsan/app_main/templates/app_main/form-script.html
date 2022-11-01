@@ -2,7 +2,6 @@
 <script>
 	window.onload = () => {
 		{% for input in form %}
-			console.log('{{ input.id_for_label }}')
 			{% if input.errors %}
 				document.getElementById('{{ input.id_for_label }}-underline').classList.add('form__input-underline_red')
 			{% endif %}

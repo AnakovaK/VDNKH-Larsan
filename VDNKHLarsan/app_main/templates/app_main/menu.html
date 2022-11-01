@@ -1,30 +1,28 @@
 {% load static %}
-{% block extra_css %}
-<link rel="stylesheet" href="{% static 'css/menu.css' %}">
-{% endblock extra_css %}
 
-<header class="header">
-  <!-- Fixed navbar -->
-  <nav class="navbar fixed-top navbar-default rounded" style="background-color: #FFFFFF;">
-    <a class="navbar-brand" href="#">
-      <img src="static/img/vdnkh.png" width="40" height="40" class="d-inline-block align-top" alt="">
-    </a>
-    <div class="container-fluid">
-      <div class="collapse navbar-collapse" id="navbarCollapse">
-        <ul class="navbar-nav me-auto mb-2 mb-md-0">
+<header class="header fixed-top">
+  <nav class="navbar navbar-expand-md">
+      <div class="navbar__container container container-fluid">
+      <a class="navbar-brand logo" href="#">
+        <!-- <img src="{% static 'img/vdnkh.png' %}" class="d-inline-block align-top navbar-brand-img" alt=""> -->
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto">
           <li class="nav-item">
-            <a class="nav-link" aria-current="page" href="{% url 'home' %}" style="color: #FFFFFF;">Главная</a>
+            <a class="nav-link active" aria-current="page" href="{% url 'home' %}">Главная</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#" style="color: #E22C38;">Карта</a>
+            <a class="nav-link" href="#">Карта</a>
           </li>
-        </ul>
-        <ul class="navbar-nav d-flex">
           <li class="nav-item">
             {% if request.user.is_authenticated %}
-            <a class="nav-link" href="#" style="color: #E22C38;">Выход</a>
+            <a class="nav-link" href="{% url 'logout' %}">Выход</a>
             {% else %}
-            <a class="nav-link" href="#" style="color: #E22C38;">Авторизация</a>
+            <a class="nav-link" href="{% url 'login' %}">Авторизация</a>
             {% endif %}
           </li>
         </ul>

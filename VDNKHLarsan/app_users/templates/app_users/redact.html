@@ -9,28 +9,40 @@
 <title>Редактировать профиль</title>
 {% endblock %}
 
+{% block top %}
+<div class="top">
+  <div class="container">
+    <h1 class="page-title">Редактировать профиль</h1>
+    <a href="{% url 'profile' profile.id %}">Назад</a>
+  </div>
+</div>
+{% endblock %}
+
 {% block content %}
-	<a href="{% url 'profile' profile.id %}">Назад</a>
-	<h1>Редактировать профиль</h1>
-	<form class="form" action="{% url 'profile-redact' profile.id %}" method="post">
-		{% csrf_token %}
+<section class="section">
+  <div class="section__container container">
 
-		{{ form.non_field_errors }}
+    <form class="form" action="{% url 'profile-redact' profile.id %}" method="post">
+      {% csrf_token %}
 
-		{% for input in form %}
-		<div class="form__field">
-			<label class="form__label" for="{{ input.id_for_label }}">{{ input.label }}:</label>
-			{{ input }}
-			<div class="form__input-underline" id="{{ input.id_for_label }}-underline"></div>
-			<ul class="form__errors-wrapper list-reset">
-				{% for err in input.errors %}
-					<li class="form__fields-error">{{ err }}</li>
-				{% endfor %}
-			</ul>
-		</div>
-		{% endfor %}
-		<button class="form__submit-btn btn-reset" type="submit">Изменить</button>
-	</form>
+      {{ form.non_field_errors }}
+
+      {% for input in form %}
+      <div class="form__field">
+        <label class="form__label" for="{{ input.id_for_label }}">{{ input.label }}:</label>
+        {{ input }}
+        <div class="form__input-underline" id="{{ input.id_for_label }}-underline"></div>
+        <ul class="form__errors-wrapper list-reset">
+          {% for err in input.errors %}
+          <li class="form__fields-error">{{ err }}</li>
+          {% endfor %}
+        </ul>
+      </div>
+      {% endfor %}
+      <button class="form__submit-btn btn-reset" type="submit">Изменить</button>
+    </form>
+  </div>
+</section>
 {% endblock %}
 
 {% block extra_js %}
