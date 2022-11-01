@@ -99,3 +99,9 @@
 	<p>Нет учётной записи? <a href="{% url 'sign-up' %}">Зарегистрируйтесь!</a></p>
 {% endif %}
 {% endblock %}
+
+{% block extra_js %}
+<script src="{% static 'js/places.js' %}"></script>
+<script src="{% static 'js/map.js' %}"></script>
+{% endblock %}
+
