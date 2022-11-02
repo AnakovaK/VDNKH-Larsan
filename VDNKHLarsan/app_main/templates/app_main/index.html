@@ -103,13 +103,17 @@
 		<p>Нет учётной записи? <a href="#">Зарегистрируйтесь!</a></p>
 	{% endif %}
 			<div id="map" style="width: 600px; height: 400px"></div>
+			<div id="map_routes" style="width: 600px; height: 400px; margin-top: 500px"></div>
 </body>
 
 </html>
 {% endblock %}
 
 {% block extra_js %}
+<script src="{% static 'js/routesObject.js' %}"></script>
+<script src="{% static 'js/routes.js' %}"></script>
 <script src="{% static 'js/places.js' %}"></script>
 <script src="{% static 'js/map.js' %}"></script>
+<script src="{% static 'js/jquery-3.6.1.js' %}"></script>
 {% endblock %}
 

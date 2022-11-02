@@ -85,7 +85,7 @@ WSGI_APPLICATION = 'VDNKHLarsan.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'vdnkhdb',
+        'NAME': os.getenv('DJANGO_DATABASE_NAME'),
         'USER': os.getenv('DJANGO_DATABASE_USERNAME', 'define me!'),
         'PASSWORD': os.getenv('DJANGO_DATABASE_PASSWORD', 'define me!'),
         'HOST': os.getenv('DJANGO_DATABASE_HOST', '0.0.0.0'),
@@ -127,6 +127,7 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
 
+STATIC_ROOT = os.path.join('VDNKHLarsan', 'static')
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [
     'static',
