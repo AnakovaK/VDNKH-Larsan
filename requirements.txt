@@ -9,4 +9,4 @@ django-crispy-forms==1.13.0
 crispy-bootstrap5==0.6
 
 # Environment
-python-dotenv==0.20.0
+python-dotenv==0.21.0
