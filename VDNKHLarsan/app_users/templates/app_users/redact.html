@@ -11,7 +11,7 @@
 
 {% block top %}
 <div class="top">
-  <div class="container">
+  <div class="container-fluid">
     <h1 class="page-title">Редактировать профиль</h1>
     <a href="{% url 'profile' profile.id %}">Назад</a>
   </div>
@@ -20,7 +20,7 @@
 
 {% block content %}
 <section class="section">
-  <div class="section__container container">
+  <div class="section__container container-fluid">
 
     <form class="form" action="{% url 'profile-redact' user.id %}" method="post">
       {% csrf_token %}

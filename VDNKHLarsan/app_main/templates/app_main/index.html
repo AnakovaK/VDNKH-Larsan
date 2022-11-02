@@ -11,7 +11,7 @@
 
 {% block top %}
 <div class="top">
-  <div class="container">
+  <div class="container-fluid">
     <h1 class="page-title">Главная страница</h1>
     {% if request.user.is_authenticated %}
     <h2>Добро пожаловать, <a href="{% url 'profile' user.id %}">{{ user.username }}!</a></h2>
