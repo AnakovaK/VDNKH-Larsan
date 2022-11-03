@@ -5,6 +5,7 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse_lazy, reverse
 from django.views.generic import FormView, UpdateView, DetailView, CreateView
+from taggit.models import Tag
 
 from .forms import SignUpForm, LoginForm, ProfileForm
 from .models import User
@@ -48,6 +49,18 @@ class ProfileDetailView(DetailView):
     model = User
     context_object_name = 'profile'
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        tag_names = [tag.name for tag in Tag.objects.all()]
+        context['all_tags'] = tag_names
+        return context
+
+    def post(self, request, *args, **kwargs):
+        #vis3 = request.user.tags.all()
+        #vis4 = request.user
+        addtag(request)
+        return HttpResponseRedirect(reverse('profile', kwargs={'pk':  self.kwargs['pk']}))
+
 
 class ProfileUpdateView(UpdateView):
     template_name = 'app_users/redact.html'
@@ -58,6 +71,10 @@ class ProfileUpdateView(UpdateView):
     def get_success_url(self):
         return reverse('profile', kwargs={'pk': self.object.id})
 
-    def form_valid(self, form):
-        form.save()
-        return HttpResponseRedirect(self.get_success_url())
+
+def addtag(request):
+    if request.method == "POST":
+        name = request.POST.get('name')
+        user = request.user
+        user.tags.add(f"{name}")
+        user.save()
