@@ -39,17 +39,6 @@ class ProfileForm(forms.ModelForm):
             visible.field.widget.attrs['class'] = 'form__input'
 
 
-# class ProfileUserForm(forms.ModelForm):
-#     class Meta:
-#         model = User
-#         fields = ('username', 'first_name', 'last_name', 'email')
-#
-#     def __init__(self, *args, **kwargs):
-#         super().__init__(*args, **kwargs)
-#         for visible in self.visible_fields():
-#             visible.field.widget.attrs['class'] = 'form__input'
-
-
 class WalkRequirementsForm(forms.Form):
     WALKING = (
         ('f', 'быстрая'),

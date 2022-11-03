@@ -21,13 +21,6 @@ class SignUpView(CreateView):
         user = form.save()
         username = form.cleaned_data.get('username')
         raw_password = form.cleaned_data.get('password1')
-        # patronymic = form.cleaned_data.get('patronymic')
-        # born = form.cleaned_data.get('born')
-        # Profile.objects.create(
-        #     user=user,
-        #     patronymic=patronymic,
-        #     born=born
-        # )
         user = authenticate(username=username, password=raw_password)
         login(self.request, user)
         return HttpResponseRedirect(self.success_url)
@@ -56,8 +49,6 @@ class ProfileDetailView(DetailView):
         return context
 
     def post(self, request, *args, **kwargs):
-        #vis3 = request.user.tags.all()
-        #vis4 = request.user
         addtag(request)
         return HttpResponseRedirect(reverse('profile', kwargs={'pk':  self.kwargs['pk']}))
 
