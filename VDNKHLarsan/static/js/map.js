@@ -76,8 +76,8 @@ function init() {
              },
              properties: {
                  balloonContentHeader: place.properties.title,
-                 balloonContentBody: "<img src=image></img>",
-                 balloonContentFooter: "Подвал",
+                 balloonContentBody: `<img src="${image}">`,
+                 balloonContentFooter: `<button type="button" value="${place.id}" id = "addToRoute">Добавить в маршрут</button>`,
              },
              options: {
                  iconLayout: 'default#image',
@@ -91,6 +91,7 @@ function init() {
      }
 
      myMap.geoObjects.add(objectManager)
+     var balloonIdOnClick;
 
      function onObjectEvent(e) {
          var objectId = e.get('objectId');
@@ -103,6 +104,8 @@ function init() {
              myMap.setCenter(places[parseInt(placeKeys[objectId])].geometry.coordinates.reverse(), 17, {
                  duration: 400
              })
+             balloonIdOnClick = places[parseInt(placeKeys[objectId])].id
+             console.log(balloonIdOnClick)
          } else if (e.get('type') == 'balloonclose') {
              objectManager.objects.setObjectOptions(objectId, {
                  iconImageHref: placemarkIconsInactive[objectId],
@@ -115,6 +118,14 @@ function init() {
 
 
      }
+
+     $(".addToRoute").bind({
+         click : function (){
+         var vl = $(this).val()
+         console.log("Hello from button")
+         console.log(vl)
+             }})
+
 
 
 
@@ -177,6 +188,15 @@ function init() {
      myMap.controls.remove("rulerControl")
 
 
+ }
+
+ function onClickAddRoute(placeId){
+     console.log("Hello button!")
+     console.log(placeId)
+     $.ajax({
+         url: 'app_main/views.py',
+
+     })
  }
 
 
