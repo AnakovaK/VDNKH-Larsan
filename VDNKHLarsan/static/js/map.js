@@ -7,15 +7,17 @@
  var jsonData;
  var categorites = [];
 
+// require(['pg'], function (pg){
+//     console.log('Hello pg')
+// })
 
-
- ymaps.ready(init);
+ ymaps.ready(init)
 
 
 
 function init() {
 
-     var MQLayer = function () {
+    var MQLayer = function () {
          var layer = new ymaps.Layer('https://api.maptiler.com/maps/outdoor/%z/%x/%y.png?key=KMWOM1cg8sVU6qvP43lH', {
              projection: ymaps.projection.sphericalMercator
          })
@@ -59,6 +61,7 @@ function init() {
      for (var placeKey in placeKeys) {
 
          var place = places[parseInt(placeKeys[placeKey])]
+         var image = ADDRESS_PREFIX + place.properties.pic
          if (!(categorites.includes(place.properties.type_s1))){
             categorites.push(place.properties.type_s1)
          }
@@ -72,10 +75,9 @@ function init() {
                  coordinates: place.geometry.coordinates.reverse()
              },
              properties: {
-                 balloonContentHeader: place.properties.type_s1,
-                 balloonContentBody: "Содержимое <em>балуна</em> метки",
+                 balloonContentHeader: place.properties.title,
+                 balloonContentBody: "<img src=image></img>",
                  balloonContentFooter: "Подвал",
-                 hintContent: place.properties.icon,
              },
              options: {
                  iconLayout: 'default#image',
@@ -115,62 +117,58 @@ function init() {
      }
 
 
+
      objectManager.objects.events.add(['balloonopen', 'balloonclose'], onObjectEvent);
+     //
+     // listBoxItems = ['Павильон', 'Въезд', 'Еда', 'Развлечения', 'Музей']
+     //     .map(function (title) {
+     //         return new ymaps.control.ListBoxItem({
+     //             data: {
+     //                 content: title
+     //             },
+     //             state: {
+     //                 selected: true
+     //             }
+     //         })
+     //     }),
+     //     reducer = function (filters, filter) {
+     //         filters[filter.data.get('content')] = filter.isSelected();
+     //         return filters;
+     //     },
+     //     listBoxControl = new ymaps.control.ListBox({
+     //         data: {
+     //             content: 'Фильтр',
+     //             title: 'Фильтр'
+     //         },
+     //         items: listBoxItems,
+     //         state: {
+     //             expanded: true,
+     //             filters: listBoxItems.reduce(reducer, {})
+     //         }
+     //     });
+     // myMap.controls.add(listBoxControl);
+     //
+     // listBoxControl.events.add(['select', 'deselect'], function (e) {
+     //     var listBoxItem = e.get('target');
+     //     var filters = ymaps.util.extend({}, listBoxControl.state.get('filters'));
+     //     filters[listBoxItem.data.get('content')] = listBoxItem.isSelected();
+     //     listBoxControl.state.set('filters', filters);
+     // });
+     //
+     // var filterMonitor = new ymaps.Monitor(listBoxControl.state);
+     // filterMonitor.add('filters', function (filters) {
+     //     objectManager.setFilter(getFilterFunction(filters));
+     // });
+     //
+     // function getFilterFunction(categories) {
+     //     return function (obj) {
+     //         var content = obj.properties.balloonContentHeader;
+     //         return categories[content]
+     //     }
+     // }
+     //
 
-     listBoxItems = ['Павильон', 'Въезд', 'Еда', 'Развлечения', 'Музей']
-         .map(function (title) {
-             return new ymaps.control.ListBoxItem({
-                 data: {
-                     content: title
-                 },
-                 state: {
-                     selected: true
-                 }
-             })
-         }),
-         reducer = function (filters, filter) {
-             filters[filter.data.get('content')] = filter.isSelected();
-             return filters;
-         },
-         listBoxControl = new ymaps.control.ListBox({
-             data: {
-                 content: 'Фильтр',
-                 title: 'Фильтр'
-             },
-             items: listBoxItems,
-             state: {
-                 expanded: true,
-                 filters: listBoxItems.reduce(reducer, {})
-             }
-         });
-     myMap.controls.add(listBoxControl);
 
-     listBoxControl.events.add(['select', 'deselect'], function (e) {
-         var listBoxItem = e.get('target');
-         var filters = ymaps.util.extend({}, listBoxControl.state.get('filters'));
-         filters[listBoxItem.data.get('content')] = listBoxItem.isSelected();
-         listBoxControl.state.set('filters', filters);
-     });
-
-     var filterMonitor = new ymaps.Monitor(listBoxControl.state);
-     filterMonitor.add('filters', function (filters) {
-         objectManager.setFilter(getFilterFunction(filters));
-     });
-
-     function getFilterFunction(categories) {
-         return function (obj) {
-             var content = obj.properties.balloonContentHeader;
-             return categories[content]
-         }
-     }
-
-     $.ajax({
-         url: "vdnh.json"
-     }).done(function (data){
-         jsonData = data;
-     })
-
-    console.log(categorites)
 
 
      myMap.controls.remove("trafficControl")
