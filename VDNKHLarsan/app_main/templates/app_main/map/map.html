@@ -14,7 +14,7 @@
   <div class="content">
     <div class="top">
       <div class="container-fluid">
-        <h1 class="page-title">Карта</h1>
+        <h1 class="page-title">{% block map_title %}Карта{% endblock %}</h1>
       </div>
     </div>
     {% block map_detail %}
@@ -31,5 +31,6 @@
 
 {% block extra_js %}
 <script src="{% static 'js/places.js' %}"></script>
+<script src="{% static 'js/routesObject.js' %}"></script>
 <script src="{% static 'js/map.js' %}"></script>
 {% endblock %}
