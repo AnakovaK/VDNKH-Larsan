@@ -1,5 +1,7 @@
 from django.shortcuts import render
-from django.views.generic import TemplateView
+from django.views.generic import TemplateView, ListView, DetailView
+
+from .models import Route
 
 
 class IndexView(TemplateView):
@@ -7,4 +9,16 @@ class IndexView(TemplateView):
 
 
 class MapView(TemplateView):
-    template_name = 'app_main/map.html'
+    template_name = 'app_main/map/map.html'
+
+
+class RouteListView(ListView):
+    template_name = 'app_main/map/route-list.html'
+    model = Route
+    context_object_name = 'routes'
+
+
+class RouteDetailView(DetailView):
+    template_name = 'app_main/map/route-detail.html'
+    model = Route
+    context_object_name = 'route'
