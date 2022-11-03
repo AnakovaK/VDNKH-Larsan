@@ -93,6 +93,8 @@ function init() {
      myMap.geoObjects.add(objectManager)
      var balloonIdOnClick;
 
+
+
      function onObjectEvent(e) {
          var objectId = e.get('objectId');
          console.log(places[parseInt(placeKeys[objectId])].geometry.coordinates.reverse())
@@ -105,7 +107,11 @@ function init() {
                  duration: 400
              })
              balloonIdOnClick = places[parseInt(placeKeys[objectId])].id
-             console.log(balloonIdOnClick)
+             $("#addToRoute").bind({
+                    click : function (){
+                     var vl = $(this).val()
+                     onClickAddRoute(vl)
+             }})
          } else if (e.get('type') == 'balloonclose') {
              objectManager.objects.setObjectOptions(objectId, {
                  iconImageHref: placemarkIconsInactive[objectId],
@@ -119,12 +125,7 @@ function init() {
 
      }
 
-     $(".addToRoute").bind({
-         click : function (){
-         var vl = $(this).val()
-         console.log("Hello from button")
-         console.log(vl)
-             }})
+
 
 
 
@@ -190,12 +191,22 @@ function init() {
 
  }
 
+
+
  function onClickAddRoute(placeId){
      console.log("Hello button!")
      console.log(placeId)
      $.ajax({
          url: 'app_main/views.py',
-
+         data: {
+             'placeId': placeId
+         },
+         success: function (data){
+             alert("It worked")
+         },
+         error: function (data){
+             alert("ya obosralsa")
+         }
      })
  }
 
