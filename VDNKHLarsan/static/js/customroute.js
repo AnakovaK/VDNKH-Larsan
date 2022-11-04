@@ -70,7 +70,7 @@ function init(){
     myMap2.geoObjects.add(multiRoute2)
 
 
-     myMap2.controls.remove("trafficControl")
+    myMap2.controls.remove("trafficControl")
     myMap2.controls.remove("fullscreenControl")
     myMap2.controls.remove("typeSelector")
     myMap2.controls.remove("rulerControl")
