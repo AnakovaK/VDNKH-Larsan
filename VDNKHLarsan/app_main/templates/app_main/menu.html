@@ -1,44 +1,32 @@
 {% load static %}
-{% block extra_css %}
-<style>
-div {
-position: absolute;
-left: 0%;
-right: 0%;
-top: 0%;
-bottom: 0%;
-}
 
-p {
-background: #FFFFFF;
-box-shadow: 0px 12px 12px rgba(0, 0, 0, 0.04), 0px 0px 12px rgba(0, 0, 0, 0.04);
-border-radius: 4px;
-}
-</style>
-{% endblock extra_css %}
-<header>
-    <!-- Fixed navbar -->
-    <nav class="navbar navbar-expand-md fixed-top" style="background-color: #FF3644;">
-        <div class="container-fluid">
-            <div class="collapse navbar-collapse" id="navbarCollapse">
-                <ul class="navbar-nav me-auto mb-2 mb-md-0">
-                    <li class="nav-item">
-                        <a class="nav-link" aria-current="page" href="{% url 'home' %}" style="color: #FFFFFF;">Главная</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#" style="color: #FFFFFF;">Карта</a>
-                    </li>
-                </ul>
-                <ul class="navbar-nav d-flex">
-                    <li class="nav-item">
-                        {% if request.user.is_authenticated %}
-                        <a class="nav-link" href="#" style="color: #FFFFFF;">Выход</a>
-                        {% else %}
-                        <a class="nav-link" href="#" style="color: #FFFFFF;">Авторизация</a>
-                        {% endif %}
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </nav>
+<header class="header fixed-top">
+  <nav class="navbar navbar-expand-md">
+      <div class="navbar__container container container-fluid">
+      <a class="navbar-brand logo" href="#">
+        <!-- <img src="{% static 'img/vdnkh.png' %}" class="d-inline-block align-top navbar-brand-img" alt=""> -->
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="{% url 'home' %}">Главная</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Карта</a>
+          </li>
+          <li class="nav-item">
+            {% if request.user.is_authenticated %}
+            <a class="nav-link" href="{% url 'logout' %}">Выход</a>
+            {% else %}
+            <a class="nav-link" href="{% url 'login' %}">Авторизация</a>
+            {% endif %}
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
 </header>

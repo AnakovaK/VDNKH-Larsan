@@ -1,3 +1,51 @@
+html {
+  box-sizing: border-box;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: inherit;
+}
+
+:root {
+  --col_1: #e22c38;
+  --col_2: #f7eae6;
+}
+
+body {
+  background-color: var(--col_1);
+}
+
+a {
+  color: #fff;
+  text-decoration: none;
+}
+
+.list-reset {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.btn-reset {
+  padding: 0;
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+}
+
+.top {
+  padding-top: 104px;
+}
+
+.page-title {
+  font-family: 'VDNHLebedev2', sans-serif;
+  font-size: 84px;
+  font-weight: 400;
+  color: #fff;
+}
+
 .bd-placeholder-img {
   font-size: 1.125rem;
   text-anchor: middle;

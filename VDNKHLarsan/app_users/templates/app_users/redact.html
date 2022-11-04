@@ -1,19 +1,19 @@
 {% extends "app_main/base.html" %}
 {% load static %}
 
-{% block title %}
-<title>Войти</title>
-{% endblock %}
-
 {% block extra_css %}
 <link rel="stylesheet" href="{% static 'css/forms.css' %}">
+{% endblock %}
+
+{% block title %}
+<title>Редактировать профиль</title>
 {% endblock %}
 
 {% block top %}
 <div class="top">
   <div class="container">
-    <h1 class="page-title">Войти</h1>
-    <p class="top__text" style="color:#fff">Нет учётной записи? <a style="text-decoration: underline;" href="{% url 'sign-up' %}">Зарегистрируйтесь!</a></p>
+    <h1 class="page-title">Редактировать профиль</h1>
+    <a href="{% url 'profile' profile.id %}">Назад</a>
   </div>
 </div>
 {% endblock %}
@@ -21,17 +21,11 @@
 {% block content %}
 <section class="section">
   <div class="section__container container">
-    <a href="{% url 'home' %}">На главную</a>
-    <form class="form" action="{% url 'login' %}" method="post">
+
+    <form class="form" action="{% url 'profile-redact' profile.id %}" method="post">
       {% csrf_token %}
 
-      {% if form.non_field_errors %}
-      <ul class="form__field-error-list list-reset">
-        {% for err in form.non_field_errors %}
-        <li class="form__fields-error">{{ err|escape }}</li>
-        {% endfor %}
-      </ul>
-      {% endif %}
+      {{ form.non_field_errors }}
 
       {% for input in form %}
       <div class="form__field">
@@ -45,8 +39,7 @@
         </ul>
       </div>
       {% endfor %}
-
-      <button class="form__submit-btn btn-reset" type="submit">Войти</button>
+      <button class="form__submit-btn btn-reset" type="submit">Изменить</button>
     </form>
   </div>
 </section>
