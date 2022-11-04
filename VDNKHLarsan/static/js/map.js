@@ -6,17 +6,19 @@
  var listBoxItems = [];
  var jsonData;
  var categorites = [];
-
-// require(['pg'], function (pg){
-//     console.log('Hello pg')
-// })
+ var tierOneCategories = ['Павильон', 'Развлечения', 'Музей', 'Спорт', 'Храм', 'Памятник', 'Вход', 'Фонтан', 'Пикник', 'Парковка', 'Площадь', 'Инфоцентр', 'Пруд', 'Банкомат', 'Прокат', 'Туалеты', 'Сувениры', 'Такси', 'Остановка', 'Другое', 'Вендинговый аппарат', 'Медпункт', 'Читальня', 'Билеты', 'Аттракцион'];
 
  ymaps.ready(init)
 
 
 
-function init() {
 
+
+function init() {
+    var IconLayoutClass = ymaps.templateLayoutFactory.createClass(
+        '<img src = {{properties.iconImageHref}}></img>'+
+        '<div style="margin-top: 50px">{{properties.iconCaption}}</div>'
+         )
     var MQLayer = function () {
          var layer = new ymaps.Layer('https://api.maptiler.com/maps/outdoor/%z/%x/%y.png?key=KMWOM1cg8sVU6qvP43lH', {
              projection: ymaps.projection.sphericalMercator
@@ -44,13 +46,11 @@ function init() {
          },
          {
              restrictMapArea: [
-                 [55.822535, 37.609675],
-                 [55.843460, 37.642077]
+                 [55.819519, 37.581011],
+                 [55.849442, 37.661223]
              ]
          },
-         {
-             searchControlProvider: 'yandex#search'
-         }
+
      );
 
      myMap.setType(myMapType);
@@ -72,17 +72,21 @@ function init() {
              id: placeKey,
              geometry: {
                  type: 'Point',
-                 coordinates: place.geometry.coordinates.reverse()
+                 coordinates: place.geometry.coordinates.reverse(),
              },
              properties: {
                  balloonContentHeader: place.properties.title,
                  balloonContentBody: `<img src="${image}">`,
                  balloonContentFooter: `<button type="button" value="${place.id}" id = "addToRoute">Добавить в маршрут</button>`,
+                 iconCaption: "Caption",
+                 iconImageHref: placemarkIconsInactive[placeKey],
+                 iconCaption: place.properties.show_title,
+                 type: place.properties.type,
              },
              options: {
-                 iconLayout: 'default#image',
+                 iconLayout: IconLayoutClass,
                  iconImageHref: placemarkIconsInactive[placeKey],
-                 iconImageSize: [25, 35],
+                 iconImageSize: chooseSize(place),
                  hideIconOnBalloonOpen: false,
              }
          })
@@ -92,6 +96,7 @@ function init() {
 
      myMap.geoObjects.add(objectManager)
      var balloonIdOnClick;
+
 
 
 
@@ -117,7 +122,7 @@ function init() {
                  iconImageHref: placemarkIconsInactive[objectId],
                  iconImageSize: [25, 35]
              })
-             myMap.setCenter([55.832135, 37.628041], 15, {
+             myMap.setCenter(places[parseInt(placeKeys[objectId])].geometry.coordinates.reverse(), 15, {
                  duration: 300
              })
          }
@@ -183,11 +188,13 @@ function init() {
 
 
 
-     myMap.controls.remove("trafficControl")
-     myMap.controls.remove("fullscreenControl")
-     myMap.controls.remove("typeSelector")
-     myMap.controls.remove("rulerControl")
+    myMap.controls.remove("trafficControl")
+    myMap.controls.remove("fullscreenControl")
+    myMap.controls.remove("typeSelector")
+    myMap.controls.remove("rulerControl")
+    myMap.controls.remove("searchControl")
 
+    console.log(categorites)
 
  }
 
@@ -213,6 +220,10 @@ function init() {
      })
  }
 
-
-
+ function chooseSize(placeObj){
+    if (placeObj.properties.type == "Павильон"){
+        return [25, 35]
+    }
+    return [15, 25]
+ }
 
