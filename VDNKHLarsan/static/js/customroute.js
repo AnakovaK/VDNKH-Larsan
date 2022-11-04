@@ -5,7 +5,7 @@ ymaps.ready(init)
 
 function init(){
     var cnt = 0;
-      var MQLayer = function () {
+    var MQLayer = function () {
            var layer = new ymaps.Layer('https://api.maptiler.com/maps/outdoor/%z/%x/%y.png?key=KMWOM1cg8sVU6qvP43lH', {
                projection: ymaps.projection.sphericalMercator
            })
@@ -25,7 +25,7 @@ function init(){
 
        ymaps.mapType.storage.add(myMapType);
 
-     var myMap = new ymaps.Map('map_routes', {
+     var myMap2 = new ymaps.Map('map_r', {
              center: [55.832135, 37.628041],
              zoom: 15,
              controls: ['smallMapDefaultSet']
@@ -41,22 +41,24 @@ function init(){
          }
      );
 
-     myMap.setType(myMapType);
+     myMap2.setType(myMapType);
 
-     for (var item of routesObject.routes[4].items) {
-        coords[cnt] = places[parseInt(item.place)].geometry.coordinates.reverse();
-        myMap.geoObjects.add(new ymaps.Placemark(coords[cnt],
+     var test = 0;
+    for (var item of data) {
+        console.log(item)
+        coords[test] = places[item].geometry.coordinates.reverse();
+                myMap2.geoObjects.add(new ymaps.Placemark(coords[test],
             {
-                iconContent: cnt + 1
+                iconContent: test + 1
             }));
-        cnt++;
+        test++;
+
     }
 
-     multiRoute = new ymaps.multiRouter.MultiRoute({
+    multiRoute2 = new ymaps.multiRouter.MultiRoute({
          referencePoints: coords,
          params:{
              routingMode: 'pedestrian',
-
          }
      }, {
          routeActiveMarkerVisible: false,
@@ -64,5 +66,5 @@ function init(){
          wayPointVisible: false
      })
 
-    myMap.geoObjects.add(multiRoute)
-}
+    myMap2.geoObjects.add(multiRoute2)
+    }

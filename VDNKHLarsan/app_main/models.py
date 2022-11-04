@@ -1,5 +1,6 @@
 import uuid
 
+from django.contrib.postgres.fields import ArrayField
 from django.db import models
 
 
@@ -26,3 +27,18 @@ class Route(models.Model):
 
     def __str__(self):
         return self.name
+
+
+class RoutePoint(models.Model):
+    point = models.IntegerField()
+
+    def __str__(self):
+        return str(self.point)
+
+
+class CustomRoute(models.Model):
+    route_points = models.ManyToManyField(RoutePoint)
+
+    def __str__(self):
+        all_points = ", ".join(str(seg) for seg in self.route_points.all())
+        return "{}".format(all_points)

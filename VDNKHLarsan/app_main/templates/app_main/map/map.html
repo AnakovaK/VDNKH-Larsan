@@ -22,15 +22,31 @@
       <div class="container-fluid">
         <a href="{% url 'route-list' %}" style="text-decoration: underline;">Перейти к маршрутам</a>
       </div>
+      <div class="container-fluid">
+        {{ route }}
+      </div>
     </section>
     {% endblock %}
   </div>
-  <div class="map" id="map"></div>
+  <div class="map" id="map_r"></div>
 </div>
 {% endblock %}
 
 {% block extra_js %}
-<script src="{% static 'js/places.js' %}"></script>
+<script src="{% static 'js/jquery-3.6.1.js' %}"></script>
 <script src="{% static 'js/routesObject.js' %}"></script>
+<script src="{% static 'js/places.js' %}"></script>
 <script src="{% static 'js/map.js' %}"></script>
+<script>
+  window.onload = function () {
+  var cnt = 0;
+  var data = [
+    {% for point in route %}
+      {{ point|safe }},
+    {% endfor %}
+  ]
+  console.log(data)
+  }
+</script>
+<script src="{% static 'js/customroute.js' %}"></script>
 {% endblock %}
