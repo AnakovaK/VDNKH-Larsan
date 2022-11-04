@@ -197,14 +197,17 @@ function init() {
      console.log("Hello button!")
      console.log(placeId)
      $.ajax({
-         url: 'app_main/views.py',
+         method: "POST",
+         url: "get_route/",
          data: {
              'placeId': placeId
          },
          success: function (data){
              alert("It worked")
          },
-         error: function (data){
+         error: function (data, textStatus, errorThrown){
+             console.log(textStatus)
+             console.log(errorThrown)
              alert("ya obosralsa")
          }
      })
