@@ -7,21 +7,23 @@
 
 {% block top %}
 <div class="top">
-  <div class="container">
-    <h1 class="page-title">{{ user.username }} <{{user.id}}</h1>
+  <div class="container-fluid">
+    <h1 class="page-title">{{ profile.username }} <{{ profile.id }}></h1>
   </div>
 </div>
 {% endblock %}
 
 {% block content %}
 <section class="section">
-  <div class="container section__container">
+  <div class="section__container container-fluid">
     <a href="{% url 'home' %}">На главную</a>
-    <a href="{% url 'profile-redact' user.id %}">Редактировать</a>
+    <a href="{% url 'profile-redact' profile.id %}">Редактировать</a>
     <a href="{% url 'logout' %}">Выйти</a>
-    <p>Имя: {{ user.first_name }}</p>
-    <p>Фамилия: {{ user.last_name }}</p>
-    <p>{{ user.email }}</p>
+    <p>Имя: {{ profile.first_name }}</p>
+    <p>Фамилия: {{ profile.last_name }}</p>
+    <p>Отчество: {{ profile.patronymic }}</p>
+    <p>Дата рождения: {{ profile.born }}</p>
+    <p>Email: {{ profile.email }}</p>
   </div>
 </section>
 {% endblock %}

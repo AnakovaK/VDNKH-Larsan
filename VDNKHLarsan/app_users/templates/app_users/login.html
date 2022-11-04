@@ -11,7 +11,7 @@
 
 {% block top %}
 <div class="top">
-  <div class="container">
+  <div class="container-fluid">
     <h1 class="page-title">Войти</h1>
     <p class="top__text" style="color:#fff">Нет учётной записи? <a style="text-decoration: underline;" href="{% url 'sign-up' %}">Зарегистрируйтесь!</a></p>
   </div>
@@ -20,7 +20,7 @@
 
 {% block content %}
 <section class="section">
-  <div class="section__container container">
+  <div class="section__container container-fluid">
     <a href="{% url 'home' %}">На главную</a>
     <form class="form" action="{% url 'login' %}" method="post">
       {% csrf_token %}

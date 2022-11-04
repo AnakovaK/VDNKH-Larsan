@@ -1,0 +1,16 @@
+{% extends 'app_main/map/map.html' %}
+{% load static %}
+
+{% block map_title %}Маршруты{% endblock %}
+
+{% block map_detail %}
+<section class="section">
+  <div class="container-fluid">
+    <ul class="route-list list-reset">
+      {% for route in routes %}
+        <li class="route-item">{{ route.name }}</li>
+      {% endfor %}
+    </ul>
+  </div>
+</section>
+{% endblock %}

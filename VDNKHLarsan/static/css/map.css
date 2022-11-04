@@ -1,0 +1,11 @@
+.wrapper {
+  width: 100vw;
+}
+
+.map {
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 50%;
+  min-height: 100vh;
+}

@@ -84,7 +84,7 @@ WSGI_APPLICATION = 'VDNKHLarsan.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': os.getenv('DJANGO_DATABASE_NAME'),
+        'NAME': os.getenv('DJANGO_DATABASE_NAME', 'define me!'),
         'USER': os.getenv('DJANGO_DATABASE_USERNAME', 'define me!'),
         'PASSWORD': os.getenv('DJANGO_DATABASE_PASSWORD', 'define me!'),
         'HOST': os.getenv('DJANGO_DATABASE_HOST', '0.0.0.0'),
@@ -137,3 +137,4 @@ STATICFILES_DIRS = [
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+AUTH_USER_MODEL = 'app_users.User'

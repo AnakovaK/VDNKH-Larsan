@@ -1,0 +1,36 @@
+{% extends 'app_main/base.html' %}
+{% load static %}
+
+{% block title %}
+<title>Карта</title>
+{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/map.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="wrapper">
+  <div class="content">
+    <div class="top">
+      <div class="container-fluid">
+        <h1 class="page-title">{% block map_title %}Карта{% endblock %}</h1>
+      </div>
+    </div>
+    {% block map_detail %}
+    <section class="section">
+      <div class="container-fluid">
+        <a href="{% url 'route-list' %}" style="text-decoration: underline;">Перейти к маршрутам</a>
+      </div>
+    </section>
+    {% endblock %}
+  </div>
+  <div class="map" id="map"></div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="{% static 'js/places.js' %}"></script>
+<script src="{% static 'js/routesObject.js' %}"></script>
+<script src="{% static 'js/map.js' %}"></script>
+{% endblock %}
