@@ -84,7 +84,7 @@ function init() {
                  type: place.properties.type,
              },
              options: {
-                 iconLayout: IconLayoutClass,
+                 iconLayout: 'default#image',
                  iconImageHref: placemarkIconsInactive[placeKey],
                  iconImageSize: chooseSize(place),
                  hideIconOnBalloonOpen: false,

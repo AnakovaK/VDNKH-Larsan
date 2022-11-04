@@ -4,6 +4,7 @@ var placeMarks = [];
 ymaps.ready(init)
 
 function init(){
+    console.log(routeData)
     var cnt = 0;
     var MQLayer = function () {
            var layer = new ymaps.Layer('https://api.maptiler.com/maps/outdoor/%z/%x/%y.png?key=KMWOM1cg8sVU6qvP43lH', {
@@ -25,15 +26,15 @@ function init(){
 
        ymaps.mapType.storage.add(myMapType);
 
-     var myMap2 = new ymaps.Map('map_r', {
+     var myMap2 = new ymaps.Map('map', {
              center: [55.832135, 37.628041],
              zoom: 15,
              controls: ['smallMapDefaultSet']
          },
          {
              restrictMapArea: [
-                 [55.819909, 37.593784],
-                 [55.850090, 37.654994]
+                [55.819519, 37.581011],
+                 [55.849442, 37.661223]
              ]
          },
          {
@@ -44,7 +45,7 @@ function init(){
      myMap2.setType(myMapType);
 
      var test = 0;
-    for (var item of data) {
+    for (var item of routeData) {
         console.log(item)
         coords[test] = places[item].geometry.coordinates.reverse();
                 myMap2.geoObjects.add(new ymaps.Placemark(coords[test],
@@ -67,4 +68,11 @@ function init(){
      })
 
     myMap2.geoObjects.add(multiRoute2)
+
+
+     myMap2.controls.remove("trafficControl")
+    myMap2.controls.remove("fullscreenControl")
+    myMap2.controls.remove("typeSelector")
+    myMap2.controls.remove("rulerControl")
+    myMap2.controls.remove("searchControl")
     }
