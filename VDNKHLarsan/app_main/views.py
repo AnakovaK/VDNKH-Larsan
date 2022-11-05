@@ -11,6 +11,11 @@ from .models import Route, Place
 class IndexView(TemplateView):
     template_name = 'app_main/index.html'
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['routes'] = Route.objects.all()
+        return context
+
 
 class MapView(TemplateView):
     template_name = 'app_main/map/map.html'
@@ -42,7 +47,7 @@ class HeatmapView(TemplateView):
 class UploadPlacesRoutesFormView(FormView):
     template_name = 'app_main/upload.html'
     form_class = UploadForm
-    success_url = reverse_lazy('map')
+    success_url = reverse_lazy('route-list')
 
     def form_valid(self, form):
         json_file = self.request.FILES['json_file']
