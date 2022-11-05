@@ -3,12 +3,21 @@
 
 {% block map_title %}Маршруты{% endblock %}
 
+{% block map_extra_css %}
+<link rel="stylesheet" href="{% static 'css/route-list.css' %}">
+{% endblock %}
+
 {% block map_detail %}
 <section class="section">
   <div class="container-fluid">
-    <ul class="route-list list-reset">
+    <ul class="route-list list-reset d-flex">
       {% for route in routes %}
-        <li class="route-item">{{ route.name }}</li>
+        <li class="route">
+          <a href="{% url 'route-detail' route.code %}">
+            <h2 class="route__title">{{ route.name }}</h2>
+            <img class="route__img" src="{{ route.pic_url }}" alt="">
+          </a>
+        </li>
       {% endfor %}
     </ul>
   </div>

@@ -1,5 +1,10 @@
-.wrapper {
-  width: 100vw;
+.content {
+  width: 50%;
+  background-color: var(--col_1);
+}
+
+.page-title {
+  margin-bottom: 32px;
 }
 
 .map {

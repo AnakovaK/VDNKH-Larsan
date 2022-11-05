@@ -3,6 +3,7 @@ Django==4.0.2
 
 #Database
 psycopg2==2.9.5
+django-taggit==3.0.0
 
 #Forms
 django-crispy-forms==1.13.0
