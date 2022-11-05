@@ -30,9 +30,8 @@ function init(){
              routingMode: 'pedestrian',
          }
      }, {
-         routeActiveMarkerVisible: false,
          routeOpenBalloonOnClick: false,
-         wayPointVisible: false
+         wayPointVisible: true
      })
 
     var IconLayoutClass = ymaps.templateLayoutFactory.createClass(
@@ -225,16 +224,16 @@ function init(){
        ymaps.mapType.storage.add(myMapType);
 
     var bl = 0;
-    coords2 = []
-    for (var item of routeData) {
-        coords2[bl] = places[item].geometry.coordinates.reverse();
-        console.log(coords2[bl])
-        var temp_pm = new ymaps.Placemark(coords2[item], {}, {
-            preset: "islands#circleDotIcon",
-            iconColor: '#ff0000'
-        });
-        myMap.geoObjects.add(temp_pm);
-    }
+    // coords2 = []
+    // for (var item of routeData) {
+    //     coords2[bl] = places[item].geometry.coordinates.reverse();
+    //     console.log(coords2[bl])
+    //     var temp_pm = new ymaps.Placemark(coords2[item], {}, {
+    //         preset: "islands#circleDotIcon",
+    //         iconColor: '#ff0000'
+    //     });
+    //     myMap.geoObjects.add(temp_pm);
+    // }
 
     myMap.geoObjects.add(multiRoute)
 

@@ -86,9 +86,6 @@ def create_custom_route(request):
         return route
 
 
-# def add_route_point(request):
-
-
 @method_decorator(csrf_exempt, name='dispatch')
 class CustomRouteDetailView(DetailView):
     template_name = 'app_users/custom-route-detail.html'
