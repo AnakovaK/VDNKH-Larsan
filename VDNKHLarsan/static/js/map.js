@@ -1,24 +1,44 @@
  var myMap;
  var ADDRESS_PREFIX = "http://vdnh.ru/";
- var placemarks = [];
  var placemarkIconsInactive = [];
  var placemarkIconsActive = [];
- var listBoxItems = [];
- var jsonData;
  var categorites = [];
- var tierOneCategories = ['Павильон', 'Развлечения', 'Музей', 'Спорт', 'Храм', 'Памятник', 'Вход', 'Фонтан', 'Пикник', 'Парковка', 'Площадь', 'Инфоцентр', 'Пруд', 'Банкомат', 'Прокат', 'Туалеты', 'Сувениры', 'Такси', 'Остановка', 'Другое', 'Вендинговый аппарат', 'Медпункт', 'Читальня', 'Билеты', 'Аттракцион'];
+ var tierOneCategories = ['Павильон','Развлечения','Музей', 'Храм','Аттракцион'];
+ var tierTwoCategories = ['Павильон', 'Еда', 'Развлечения', 'Зеленая зона', 'Музей', 'Спорт', 'Мастерская', 'Храм', 'Прокат', 'Сувениры', 'Читальня', 'Аттракцион']
+ var tierThreeCategories = ['Павильон', 'Въезд', 'Еда', 'Развлечения', 'Зеленая зона', 'Музей', 'Спорт', 'Аллея', 'Мастерская', 'Детская площадка', 'Храм', 'Памятник', 'Вход', 'Фонтан', 'Пикник', 'Парковка', 'Площадь', 'Инфоцентр', 'Пруд', 'Банкомат', 'Прокат', 'Туалеты', 'Сувениры', 'Такси', 'Остановка', 'Другое', 'Вендинговый аппарат', 'Медпункт', 'Читальня', 'Билеты', 'Аттракцион']
 
  ymaps.ready(init)
 
-
-
-
-
 function init() {
     var IconLayoutClass = ymaps.templateLayoutFactory.createClass(
-        '<img src = {{properties.iconImageHref}}></img>'+
-        '<div style="margin-top: 50px">{{properties.iconCaption}}</div>'
-         )
+        '<img class = "my-mark" width={{properties.iconImageSize[0]}} height={{properties.iconImageSize[1]}} src = {{properties.iconImageHref}}>'+
+        '{% if properties.textVisible == "Visible" %}'+
+        '<p id = "caption-text" style="margin-top: 10px; font-size: 0.5em; line-height: 0.9; margin-right: 10px"> {{properties.iconCaption}}</p>'+
+        '{% endif %}',{
+            build: function (){
+                IconLayoutClass.superclass.build.call(this)
+                var properties = this.getData().properties
+                var zoom = myMap.getZoom()
+                var element = this.getParentElement().getElementsByClassName("my-mark")[0]
+
+                myMap.events.add('boundschange', function (){
+                    var currentZoom = myMap.getZoom()
+
+                    if (currentZoom != zoom){
+                        zoom = currentZoom
+                        if (zoom <= 17){
+                            properties.textVisible = "Invisible"
+                        }
+                        else{
+                            properties.textVisible = "Visible"
+                        }
+
+                        this.rebuild();
+                    }
+                }, this)
+            }
+    }
+         );
     var MQLayer = function () {
          var layer = new ymaps.Layer('https://api.maptiler.com/maps/outdoor/%z/%x/%y.png?key=KMWOM1cg8sVU6qvP43lH', {
              projection: ymaps.projection.sphericalMercator
@@ -78,13 +98,19 @@ function init() {
                  balloonContentHeader: place.properties.title,
                  balloonContentBody: `<img src="${image}">`,
                  balloonContentFooter: `<button type="button" value="${place.id}" id = "addToRoute">Добавить в маршрут</button>`,
-                 iconCaption: "Caption",
                  iconImageHref: placemarkIconsInactive[placeKey],
                  iconCaption: place.properties.show_title,
+                 iconImageSize: chooseSize(place),
+                 textVisible: "Invisible",
                  type: place.properties.type,
              },
              options: {
-                 iconLayout: 'default#image',
+                 iconLayout: IconLayoutClass,
+                 iconShape:{
+                   type: "Circle",
+                     coordinates: [0,0],
+                     radius: chooseSize(place)[0] + 5
+                 },
                  iconImageHref: placemarkIconsInactive[placeKey],
                  iconImageSize: chooseSize(place),
                  hideIconOnBalloonOpen: false,
@@ -129,6 +155,27 @@ function init() {
 
 
      }
+     var zoom = myMap.getZoom();
+     myMap.events.add('boundschange', function (){
+         var currentZoom = myMap.getZoom()
+         if (zoom != currentZoom){
+             if (currentZoom <= 16){
+                 objectManager.setFilter(function (object){
+                     return tierOneCategories.includes(object.properties.type)
+                 })
+             }
+             if (currentZoom == 17){
+                 objectManager.setFilter(function (object){
+                     return tierTwoCategories.includes(object.properties.type)
+                 })
+             }
+             if (currentZoom == 18){
+                 objectManager.setFilter(function (object){
+                     return tierThreeCategories.includes(object.properties.type)
+                 })
+             }
+         }
+     })
 
 
 
@@ -226,4 +273,6 @@ function init() {
     }
     return [15, 25]
  }
+
+
 
