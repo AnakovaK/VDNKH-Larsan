@@ -19,7 +19,7 @@ ymaps.ready(['Heatmap']).then(function init(){
 
      ymaps.mapType.storage.add(myMapType);
 
-     var myMap = new ymaps.Map('map_c', {
+     var myMap = new ymaps.Map('map', {
              center: [55.832135, 37.628041],
              zoom: 15,
              controls: ['smallMapDefaultSet']

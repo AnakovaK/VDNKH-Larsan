@@ -101,7 +101,7 @@ function init() {
              properties: {
                  balloonContentHeader: place.properties.title,
                  balloonContentBody: `<img src="${image}">`,
-                 balloonContentFooter: `<button type="button" value="${place.id}" id = "addToRoute">Добавить в маршрут</button>`,
+                 balloonContentFooter: ``,
                  iconImageHref: placemarkIconsInactive[placeKey],
                  iconCaption: place.properties.show_title,
                  iconImageSize: chooseSize(place),
@@ -143,11 +143,6 @@ function init() {
                  iconImageSize: [35, 45]
              })
              balloonIdOnClick = places[parseInt(placeKeys[objectId])].id
-             $("#addToRoute").bind({
-                    click : function (){
-                     var vl = $(this).val()
-                     onClickAddRoute(vl)
-             }})
          } else if (e.get('type') == 'balloonclose') {
              objectManager.objects.setObjectOptions(objectId, {
                  iconImageHref: placemarkIconsInactive[objectId],
@@ -196,27 +191,6 @@ function init() {
 
  }
 
-
-
- function onClickAddRoute(placeId){
-     console.log("Hello button!")
-     console.log(placeId)
-     $.ajax({
-         method: "POST",
-         url: "",
-         data: {
-             'placeId': placeId
-         },
-         success: function (data){
-             alert("It worked")
-         },
-         error: function (data, textStatus, errorThrown){
-             console.log(textStatus)
-             console.log(errorThrown)
-             alert("ya obosralsa")
-         }
-     })
- }
 
  function chooseSize(placeObj){
     if (placeObj.properties.type == "Павильон"){

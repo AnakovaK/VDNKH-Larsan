@@ -34,6 +34,11 @@ class PlaceDetailView(DetailView):
     model = Place
     context_object_name = 'place'
 
+
+class HeatmapView(TemplateView):
+    template_name = 'app_main/map/heatmap.html'
+
+
 class UploadPlacesRoutesFormView(FormView):
     template_name = 'app_main/upload.html'
     form_class = UploadForm
