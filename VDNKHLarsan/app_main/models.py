@@ -1,5 +1,3 @@
-import uuid
-
 from django.db import models
 
 
@@ -12,6 +10,9 @@ class Place(models.Model):
     lon = models.DecimalField(max_digits=9, decimal_places=6)
     lat = models.DecimalField(max_digits=9, decimal_places=6)
 
+    def __str__(self):
+        return self.name
+
 
 class Route(models.Model):
     id = models.IntegerField(primary_key=True)
@@ -20,10 +21,11 @@ class Route(models.Model):
     places = models.ManyToManyField(Place, related_name='route', verbose_name='Места')
     pic_url = models.URLField()
     detail_pic_url = models.URLField()
+    detail_text = models.TextField(blank=True)
 
     @property
     def points(self):
-        return len(self.places)
+        return len(self.places.all())
 
     def __str__(self):
         return self.name

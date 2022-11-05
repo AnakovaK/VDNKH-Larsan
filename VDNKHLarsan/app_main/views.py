@@ -25,6 +25,7 @@ class RouteDetailView(DetailView):
     template_name = 'app_main/map/route-detail.html'
     model = Route
     context_object_name = 'route'
+    slug_field = 'code'
 
 
 class PlaceDetailView(DetailView):
@@ -79,12 +80,14 @@ class UploadPlacesRoutesFormView(FormView):
                 code = route['code']
                 pic_url = route['pic']
                 detail_pic_url = route['detail_pic']
+                detail_text = route['detail']
                 try:
                     route_obj = Route.objects.get(id=route_id)
                     route_obj.name = name
                     route_obj.code = code
                     route_obj.pic_url = pic_url
                     route_obj.detail_pic_url = detail_pic_url
+                    route_obj.detail_text = detail_text
                 except Route.DoesNotExist:
                     route_obj = Route.objects.create(
                         id=route_id,
@@ -92,6 +95,7 @@ class UploadPlacesRoutesFormView(FormView):
                         code=code,
                         pic_url=pic_url,
                         detail_pic_url=detail_pic_url,
+                        detail_text=detail_text,
                     )
                     for item in route['items']:
                         route_obj.places.add(Place.objects.get(id=item['place']))

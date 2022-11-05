@@ -10,4 +10,4 @@ class PlaceAdmin(admin.ModelAdmin):
 
 @admin.register(Route)
 class RouteAdmin(admin.ModelAdmin):
-    list_display = ['id', 'name']
+    list_display = ['id', 'name', 'points']
