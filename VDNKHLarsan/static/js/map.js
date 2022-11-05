@@ -17,26 +17,30 @@ function init() {
         '{% endif %}',{
             build: function (){
                 IconLayoutClass.superclass.build.call(this)
-                var properties = this.getData().properties
-                var zoom = myMap.getZoom()
-                var element = this.getParentElement().getElementsByClassName("my-mark")[0]
+                if (!this.inited){
+                    this.inited = true
+                    var properties = this.getData().properties
+                    var zoom = myMap.getZoom()
+                    var element = this.getParentElement().getElementsByClassName("my-mark")[0]
 
-                myMap.events.add('boundschange', function (){
-                    var currentZoom = myMap.getZoom()
+                    myMap.events.add('boundschange', function (){
+                        var currentZoom = myMap.getZoom()
 
-                    if (currentZoom != zoom){
-                        zoom = currentZoom
-                        if (zoom <= 17){
-                            properties.textVisible = "Invisible"
+                        if (currentZoom != zoom){
+                            zoom = currentZoom
+                            if (zoom <= 17){
+                                properties.textVisible = "Invisible"
+                            }
+                            else{
+                                properties.textVisible = "Visible"
+                            }
+
+                            this.rebuild();
                         }
-                        else{
-                            properties.textVisible = "Visible"
-                        }
-
-                        this.rebuild();
-                    }
-                }, this)
+                    }, this)
             }
+                }
+
     }
          );
     var MQLayer = function () {
@@ -120,6 +124,10 @@ function init() {
 
      }
 
+     objectManager.setFilter(function (object){
+                     return tierOneCategories.includes(object.properties.type)
+                 })
+
      myMap.geoObjects.add(objectManager)
      var balloonIdOnClick;
 
@@ -134,9 +142,6 @@ function init() {
                  iconImageHref: placemarkIconsActive[objectId],
                  iconImageSize: [35, 45]
              })
-             myMap.setCenter(places[parseInt(placeKeys[objectId])].geometry.coordinates.reverse(), 17, {
-                 duration: 400
-             })
              balloonIdOnClick = places[parseInt(placeKeys[objectId])].id
              $("#addToRoute").bind({
                     click : function (){
@@ -148,17 +153,16 @@ function init() {
                  iconImageHref: placemarkIconsInactive[objectId],
                  iconImageSize: [25, 35]
              })
-             myMap.setCenter(places[parseInt(placeKeys[objectId])].geometry.coordinates.reverse(), 15, {
-                 duration: 300
-             })
          }
 
 
      }
      var zoom = myMap.getZoom();
      myMap.events.add('boundschange', function (){
+
          var currentZoom = myMap.getZoom()
          if (zoom != currentZoom){
+             console.log(currentZoom)
              if (currentZoom <= 16){
                  objectManager.setFilter(function (object){
                      return tierOneCategories.includes(object.properties.type)
