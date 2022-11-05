@@ -17,26 +17,30 @@ function init() {
         '{% endif %}',{
             build: function (){
                 IconLayoutClass.superclass.build.call(this)
-                var properties = this.getData().properties
-                var zoom = myMap.getZoom()
-                var element = this.getParentElement().getElementsByClassName("my-mark")[0]
+                if (!this.inited){
+                    this.inited = true
+                    var properties = this.getData().properties
+                    var zoom = myMap.getZoom()
+                    var element = this.getParentElement().getElementsByClassName("my-mark")[0]
 
-                myMap.events.add('boundschange', function (){
-                    var currentZoom = myMap.getZoom()
+                    myMap.events.add('boundschange', function (){
+                        var currentZoom = myMap.getZoom()
 
-                    if (currentZoom != zoom){
-                        zoom = currentZoom
-                        if (zoom <= 17){
-                            properties.textVisible = "Invisible"
+                        if (currentZoom != zoom){
+                            zoom = currentZoom
+                            if (zoom <= 17){
+                                properties.textVisible = "Invisible"
+                            }
+                            else{
+                                properties.textVisible = "Visible"
+                            }
+
+                            this.rebuild();
                         }
-                        else{
-                            properties.textVisible = "Visible"
-                        }
-
-                        this.rebuild();
-                    }
-                }, this)
+                    }, this)
             }
+                }
+
     }
          );
     var MQLayer = function () {
@@ -120,6 +124,10 @@ function init() {
 
      }
 
+     objectManager.setFilter(function (object){
+                     return tierOneCategories.includes(object.properties.type)
+                 })
+
      myMap.geoObjects.add(objectManager)
      var balloonIdOnClick;
 
@@ -134,9 +142,6 @@ function init() {
                  iconImageHref: placemarkIconsActive[objectId],
                  iconImageSize: [35, 45]
              })
-             myMap.setCenter(places[parseInt(placeKeys[objectId])].geometry.coordinates.reverse(), 17, {
-                 duration: 400
-             })
              balloonIdOnClick = places[parseInt(placeKeys[objectId])].id
              $("#addToRoute").bind({
                     click : function (){
@@ -148,90 +153,36 @@ function init() {
                  iconImageHref: placemarkIconsInactive[objectId],
                  iconImageSize: [25, 35]
              })
-             myMap.setCenter(places[parseInt(placeKeys[objectId])].geometry.coordinates.reverse(), 15, {
-                 duration: 300
-             })
          }
 
 
      }
+
+     objectManager.objects.events.add(['balloonopen', 'balloonclose'], onObjectEvent);
+
      var zoom = myMap.getZoom();
-     myMap.events.add('boundschange', function (){
-         var currentZoom = myMap.getZoom()
-         if (zoom != currentZoom){
-             if (currentZoom <= 16){
+     myMap.events.add('boundschange', function (e){
+         var old = e.get('oldZoom')
+         var nw = e.get('newZoom')
+         if (old != nw){
+
+             if (nw <= 16){
                  objectManager.setFilter(function (object){
                      return tierOneCategories.includes(object.properties.type)
                  })
              }
-             if (currentZoom == 17){
+             if (nw == 17){
                  objectManager.setFilter(function (object){
                      return tierTwoCategories.includes(object.properties.type)
                  })
              }
-             if (currentZoom == 18){
+             if (nw >= 18){
                  objectManager.setFilter(function (object){
                      return tierThreeCategories.includes(object.properties.type)
                  })
              }
          }
      })
-
-
-
-
-
-
-     objectManager.objects.events.add(['balloonopen', 'balloonclose'], onObjectEvent);
-     //
-     // listBoxItems = ['Павильон', 'Въезд', 'Еда', 'Развлечения', 'Музей']
-     //     .map(function (title) {
-     //         return new ymaps.control.ListBoxItem({
-     //             data: {
-     //                 content: title
-     //             },
-     //             state: {
-     //                 selected: true
-     //             }
-     //         })
-     //     }),
-     //     reducer = function (filters, filter) {
-     //         filters[filter.data.get('content')] = filter.isSelected();
-     //         return filters;
-     //     },
-     //     listBoxControl = new ymaps.control.ListBox({
-     //         data: {
-     //             content: 'Фильтр',
-     //             title: 'Фильтр'
-     //         },
-     //         items: listBoxItems,
-     //         state: {
-     //             expanded: true,
-     //             filters: listBoxItems.reduce(reducer, {})
-     //         }
-     //     });
-     // myMap.controls.add(listBoxControl);
-     //
-     // listBoxControl.events.add(['select', 'deselect'], function (e) {
-     //     var listBoxItem = e.get('target');
-     //     var filters = ymaps.util.extend({}, listBoxControl.state.get('filters'));
-     //     filters[listBoxItem.data.get('content')] = listBoxItem.isSelected();
-     //     listBoxControl.state.set('filters', filters);
-     // });
-     //
-     // var filterMonitor = new ymaps.Monitor(listBoxControl.state);
-     // filterMonitor.add('filters', function (filters) {
-     //     objectManager.setFilter(getFilterFunction(filters));
-     // });
-     //
-     // function getFilterFunction(categories) {
-     //     return function (obj) {
-     //         var content = obj.properties.balloonContentHeader;
-     //         return categories[content]
-     //     }
-     // }
-     //
-
 
 
 
