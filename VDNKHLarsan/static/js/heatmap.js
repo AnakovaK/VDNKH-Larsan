@@ -11,15 +11,15 @@ ymaps.ready(['Heatmap']).then(function init(){
          };
 
          return layer;
-     };
+    };
 
-     ymaps.layer.storage.add('mq#aerial', MQLayer);
+    ymaps.layer.storage.add('mq#aerial', MQLayer);
 
-     var myMapType = new ymaps.MapType('MQ + Ya', ['mq#aerial']);
+    var myMapType = new ymaps.MapType('MQ + Ya', ['mq#aerial']);
 
-     ymaps.mapType.storage.add(myMapType);
+    ymaps.mapType.storage.add(myMapType);
 
-     var myMap = new ymaps.Map('map', {
+    var myMap = new ymaps.Map('map', {
              center: [55.832135, 37.628041],
              zoom: 15,
              controls: ['smallMapDefaultSet']
@@ -31,16 +31,20 @@ ymaps.ready(['Heatmap']).then(function init(){
              ]
          },
 
-     );
-     myMap.setType(myMapType)
+    );
+    myMap.setType(myMapType)
 
-     var date = new Date();
-     var todayDate = date.getDate().toString().padStart(2, "0")
-     var formatedDate = `${todayDate}.${date.getMonth()}.${date.getFullYear()}`
+    var date = new Date();
+    var todayDate = date.getDate().toString().padStart(2, "0")
+    var formatedDate = `${todayDate}.${date.getMonth()}.${date.getFullYear()}`
+    var date = new Date();
+    var time = date.getHours()
+    if (time < 10 || time > 22) {
+        time = 0
+    }
 
     var data = []
     for (var building of congestion) {
-
         if(building != null){
             data.push({
             type: 'Feature',
@@ -50,13 +54,10 @@ ymaps.ready(['Heatmap']).then(function init(){
                 coordinates: [building.Latitude, building.Longitude]
             },
             properties: {
-                weight: building[formatedDate]/congestion[0][formatedDate]
+                weight: building[formatedDate]/congestion[0][formatedDate]*time
             }
-
         })
         }
-
-
     }
 
     var heatmap = new ymaps.Heatmap(data,{
@@ -71,12 +72,5 @@ ymaps.ready(['Heatmap']).then(function init(){
             1.0: 'rgba(162, 36, 25, 1)'
         }
     })
-
     heatmap.setMap(myMap)
-
-
-
-
-
-
 })

@@ -6,18 +6,15 @@
 {% block map_detail %}
 <script src="{% static 'js/places.js' %}"></script>
 <section class="section">
-  <div id = "information"></div>
-  <ul class="point-list">
     {% for point in route.route_points.all %}
     <script>
       var placeId = {{point}}
       var element = document.getElementById('information')
       element.innerText = places[placeId].properties.type
     </script>
-      <li class="point-item">{{ point }}</li>
+      <p class="point-item">{{ point }}  </p>
+      <p id="information"></p>
     {% endfor %}
-
-  </ul>
 </section>
 {% endblock %}
 
