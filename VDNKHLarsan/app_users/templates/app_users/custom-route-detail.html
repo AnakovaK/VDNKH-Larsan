@@ -17,5 +17,13 @@
 <script src="{% static 'js/jquery-3.6.1.js' %}"></script>
 <script src="{% static 'js/routesObject.js' %}"></script>
 <script src="{% static 'js/places.js' %}"></script>
-<script src="{% static 'js/map.js' %}"></script>
+<script>
+  var testTest = "testing..."
+  var routeData = [
+    {% for point in route.route_points.all %}
+      {{ point|safe }},
+    {% endfor %}
+  ]
+</script>
+<script src="{% static 'js/customroute.js' %}"></script>
 {% endblock %}

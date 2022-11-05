@@ -203,7 +203,7 @@ function init() {
      console.log(placeId)
      $.ajax({
          method: "POST",
-         url: "http://127.0.0.1:8000/users/profile/1/route/8/",
+         url: "",
          data: {
              'placeId': placeId
          },

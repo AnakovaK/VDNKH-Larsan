@@ -95,9 +95,9 @@ class CustomRouteDetailView(DetailView):
     model = CustomRoute
     context_object_name = 'route'
 
-    def post(self, request):
+    def post(self, request, user_id, pk):
         place_id = request.POST.get('placeId')
-        route_to_change = CustomRoute.objects.get(id=self.object.id)
+        route_to_change = CustomRoute.objects.get(id=pk)
         new_point = RoutePoint(point=place_id)
         new_point.save()
         route_to_change.route_points.add(new_point)
