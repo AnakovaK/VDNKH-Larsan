@@ -1,0 +1,30 @@
+.route-list {
+  flex-wrap: wrap;
+}
+
+.route:not(:nth-last-child(3n)) {
+  margin-right: 20px;
+}
+
+.route {
+  width: calc(100% / 3 - 20px);
+  height: 440px;
+  margin-bottom: 20px;
+  padding: 15px;
+  background-color: #fff;
+  border-radius: 4px;
+}
+
+.route__title {
+  height: 80px;
+  margin-bottom: 5px;
+  font-family: 'Suisse Intl', sans-serif;
+  font-weight: 500;
+  font-size: 24px;
+  line-height: 24px;
+  color: #262626;
+}
+
+.route__img {
+  max-width: 100%;
+}

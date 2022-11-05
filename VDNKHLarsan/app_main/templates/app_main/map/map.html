@@ -7,16 +7,20 @@
 
 {% block extra_css %}
 <link rel="stylesheet" href="{% static 'css/map.css' %}">
+{% block map_extra_css %}
+{% endblock %}
 {% endblock %}
 
 {% block content %}
 <div class="wrapper">
   <div class="content">
+    {% block map_top %}
     <div class="top">
       <div class="container-fluid">
         <h1 class="page-title">{% block map_title %}Карта{% endblock %}</h1>
       </div>
     </div>
+    {% endblock %}
     {% block map_detail %}
     <section class="section">
       <div class="container-fluid">

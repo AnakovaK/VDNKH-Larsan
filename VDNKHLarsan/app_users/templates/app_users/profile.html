@@ -24,6 +24,31 @@
     <p>Отчество: {{ profile.patronymic }}</p>
     <p>Дата рождения: {{ profile.born }}</p>
     <p>Email: {{ profile.email }}</p>
+    <p>Отмеченные Вами интересы:</p><br>
+    <ul>
+        {% for tag in user.tags.all %}
+        <li>{{ tag }}</li>
+        {% endfor %}
+    </ul>
+    <div class="dropdown">
+        <button class="btn btn-outline-primary" type="button" id="dropdownMenuButton2" data-toggle="dropdown"
+                aria-haspopup="true" aria-expanded="false">+ Добавить интересы
+        </button>
+        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton2">
+            {% if all_tags %}
+            {% for tag in all_tags %}
+            <form action="{% url 'addtag' user.id %}" method="post">
+                {% csrf_token %}
+                <input name="name" value="{{tag}}" type="submit"/>
+            </form>
+            {% endfor %}
+            {% else %}
+            <p>Тегов больше нет!</p>
+            {% endif %}
+
+        </div>
+        </form>
+    </div>
   </div>
 </section>
 {% endblock %}
