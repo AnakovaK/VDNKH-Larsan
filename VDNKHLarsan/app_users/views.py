@@ -1,14 +1,16 @@
 from django.contrib.auth import login, authenticate
 # from django.contrib.auth.models import User
 from django.contrib.auth.views import LoginView, LogoutView
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, JsonResponse
 from django.shortcuts import render
 from django.urls import reverse_lazy, reverse
+from django.utils.decorators import method_decorator
+from django.views.decorators.csrf import csrf_exempt
 from django.views.generic import FormView, UpdateView, DetailView, CreateView
 from taggit.models import Tag
 
 from .forms import SignUpForm, LoginForm, ProfileForm
-from .models import User
+from .models import User, CustomRoute, RoutePoint
 
 
 class SignUpView(CreateView):
@@ -49,8 +51,13 @@ class ProfileDetailView(DetailView):
         return context
 
     def post(self, request, *args, **kwargs):
-        addtag(request)
-        return HttpResponseRedirect(reverse('profile', kwargs={'pk':  self.kwargs['pk']}))
+        if 'create_route' in request.POST:
+            route = create_custom_route(request)
+            return HttpResponseRedirect(
+                reverse('custom-route-detail', kwargs={'user_id': request.user.id, 'pk': route.id}))
+        elif 'add_tag' in request.POST:
+            addtag(request)
+            return render(request, template_name=self.template_name, context=self.get_context_data(**kwargs))
 
 
 class ProfileUpdateView(UpdateView):
@@ -69,3 +76,30 @@ def addtag(request):
         user = request.user
         user.tags.add(f"{name}")
         user.save()
+
+
+def create_custom_route(request):
+    if request.method == "POST":
+        route = CustomRoute.objects.create(
+            user=request.user
+        )
+        return route
+
+
+# def add_route_point(request):
+
+
+@method_decorator(csrf_exempt, name='dispatch')
+class CustomRouteDetailView(DetailView):
+    template_name = 'app_users/custom-route-detail.html'
+    model = CustomRoute
+    context_object_name = 'route'
+
+    def post(self, request):
+        place_id = request.POST.get('placeId')
+        route_to_change = CustomRoute.objects.get(id=self.object.id)
+        new_point = RoutePoint(point=place_id)
+        new_point.save()
+        route_to_change.route_points.add(new_point)
+        route_to_change.save()
+        return JsonResponse({'context': request.POST}, status=200)

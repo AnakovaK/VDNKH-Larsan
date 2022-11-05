@@ -29,7 +29,8 @@ class RoutePoint(models.Model):
 
 
 class CustomRoute(models.Model):
-    route_points = models.ManyToManyField(RoutePoint)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='custom_routes', verbose_name='Пользователь')
+    route_points = models.ManyToManyField(RoutePoint, blank=True)
 
     def __str__(self):
         all_points = ", ".join(str(seg) for seg in self.route_points.all())

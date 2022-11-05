@@ -1,6 +1,5 @@
 from django.urls import path
 from . import views
-from .views import addtag
 
 urlpatterns = [
     path('sign-up/', views.SignUpView.as_view(), name='sign-up'),
@@ -8,5 +7,7 @@ urlpatterns = [
     path('logout/', views.MyLogoutView.as_view(), name='logout'),
     path('profile/<int:pk>/', views.ProfileDetailView.as_view(), name='profile'),
     path('profile/<int:pk>/redact/', views.ProfileUpdateView.as_view(), name='profile-redact'),
-    path('profile/<int:pk>/', addtag, name='addtag')
+    path('profile/<int:pk>/', views.addtag, name='addtag'),
+    path('profile/<int:pk>/', views.create_custom_route, name='custom-route_create'),
+    path('profile/<int:user_id>/route/<int:pk>/', views.CustomRouteDetailView.as_view(), name='custom-route-detail'),
 ]

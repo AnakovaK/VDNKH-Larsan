@@ -31,7 +31,7 @@
         {% endfor %}
     </ul>
     <div class="dropdown">
-        <button class="btn btn-outline-primary" type="button" id="dropdownMenuButton2" data-toggle="dropdown"
+        <button class="btn btn-outline-primary" type="button" id="dropdownMenuButton2" data-bs-toggle="dropdown"
                 aria-haspopup="true" aria-expanded="false">+ Добавить интересы
         </button>
         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton2">
@@ -39,7 +39,7 @@
             {% for tag in all_tags %}
             <form action="{% url 'addtag' user.id %}" method="post">
                 {% csrf_token %}
-                <input name="name" value="{{tag}}" type="submit"/>
+                <input name="add_tag" value="{{tag}}" type="submit"/>
             </form>
             {% endfor %}
             {% else %}
@@ -49,6 +49,17 @@
         </div>
         </form>
     </div>
+
+    <ul class="route-list">
+      {% for route in user.custom_routes.all %}
+      <li class="route"><a href="{% url 'custom-route-detail' user_id=user.id pk=route.id %}">Маршрут №{{ route.id }}</a></li>
+      {% endfor %}
+    </ul>
+    <form action="{% url 'custom-route_create' user.id %}" method="post">
+      {% csrf_token %}
+      <button type="submit" name="create_route">Построить свой маршрут</button>
+      <!-- <a href="{% url 'custom-route_create' user.id %}" style="text-decoration: underline;">Построить свой маршрут</a> -->
+    </form>
   </div>
 </section>
 {% endblock %}

@@ -25,9 +25,13 @@
     <section class="section">
       <div class="container-fluid">
         <a href="{% url 'route-list' %}" style="text-decoration: underline;">Перейти к маршрутам</a>
-      </div>
-      <div class="container-fluid">
-        {{ route }}
+        {% if request.user.is_authenticated %}
+        <a href="{% url 'profile' user.id %}" style="text-decoration: underline;">Построить свой маршрут</a>
+        {% else %}
+        <h2>Авторизуйтесь на сайте, чтобы создавать свои маршруты!</h2>
+        <a href="{% url 'login' %}">Войти</a>
+        <p>Нет учётной записи? <a href="{% url 'sign-up' %}">Зарегистрируйтесь!</a></p>
+        {% endif %}
       </div>
     </section>
     {% endblock %}

@@ -65,8 +65,8 @@ function init() {
          if (!(categorites.includes(place.properties.type_s1))){
             categorites.push(place.properties.type_s1)
          }
-         placemarkIconsInactive[placeKey] = "../static/img/icons/inactive/" + place.properties.icon + ".svg"
-         placemarkIconsActive[placeKey] = "../static/img/icons/active/" + place.properties.icon + "-active.svg"
+         placemarkIconsInactive[placeKey] = "http://127.0.0.1:8000/static/img/icons/inactive/" + place.properties.icon + ".svg"
+         placemarkIconsActive[placeKey] = "http://127.0.0.1:8000/static/img/icons/active/" + place.properties.icon + "-active.svg"
          objectManager.add({
              type: 'Feature',
              id: placeKey,
@@ -205,7 +205,7 @@ function init() {
      console.log(placeId)
      $.ajax({
          method: "POST",
-         url: "../map/",
+         url: "http://127.0.0.1:8000/users/profile/1/route/8/",
          data: {
              'placeId': placeId
          },
