@@ -1,0 +1,84 @@
+.profile__redact {
+  margin-bottom: 32px;
+}
+
+.profile__btn {
+  background-color: #fff;
+  color: #262626;
+  transition: background-color 0.4s ease-in-out;
+}
+
+.profile__btn:focus {
+  background-color: #e5e5e5;
+}
+
+.profile__btn:hover {
+  background-color: #bebebe;
+}
+
+.profile__btn:active {
+  background-color: #e5e5e5;
+}
+
+.profile__btn_2 {
+  border: solid 1px #262626;
+}
+
+.profile__btn_2:hover {
+  border: solid 1px #262626;
+}
+
+.section {
+  padding: 32px 0;
+}
+
+.fields {
+  background: var(--col_2);
+}
+
+.field-list .row {
+  margin: 0;
+  width: 100%;
+}
+
+.field {
+  width: calc((100% / 3) - 10px);
+  padding: 15px;
+  margin-bottom: 20px;
+  background-color: #fff;
+  border-radius: 4px;
+}
+
+.field:not(:nth-child(3n)) {
+  margin-right: 10px;
+}
+
+.no-more-tags {
+  margin-left: 15px;
+  margin-right: 15px;
+}
+
+.routes, .fields {
+  font-family: 'Suisse Intl', sans-serif;
+}
+
+.routes-title {
+  color: #fff;
+  font-family: 'VDNHLebedev2', sans-serif;
+  font-size: 48px;
+  font-weight: 400;
+}
+
+.route {
+  font-weight: 500;
+  font-size: 24px;
+  line-height: 32px;
+}
+
+.route:hover{
+  color: #fff;
+}
+
+.route:hover a{
+  color: #e5e5e5;
+}
