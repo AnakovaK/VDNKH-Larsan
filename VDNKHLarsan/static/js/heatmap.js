@@ -1,16 +1,16 @@
-ymaps.ready(['Heatmap']).then(function init(){
+ymaps.ready(['Heatmap']).then(function init() {
     var MQLayer = function () {
-         var layer = new ymaps.Layer('https://api.maptiler.com/maps/outdoor/%z/%x/%y.png?key=KMWOM1cg8sVU6qvP43lH', {
-             projection: ymaps.projection.sphericalMercator
-         })
-         layer.getCopyrights = function () {
-             return ymaps.vow.resolve('');
-         };
-         layer.getZoomRange = function () {
-             return ymaps.vow.resolve([0, 19]);
-         };
+        var layer = new ymaps.Layer('https://api.maptiler.com/maps/outdoor/%z/%x/%y.png?key=KMWOM1cg8sVU6qvP43lH', {
+            projection: ymaps.projection.sphericalMercator
+        })
+        layer.getCopyrights = function () {
+            return ymaps.vow.resolve('');
+        };
+        layer.getZoomRange = function () {
+            return ymaps.vow.resolve([0, 19]);
+        };
 
-         return layer;
+        return layer;
     };
 
     ymaps.layer.storage.add('mq#aerial', MQLayer);
@@ -20,17 +20,16 @@ ymaps.ready(['Heatmap']).then(function init(){
     ymaps.mapType.storage.add(myMapType);
 
     var myMap = new ymaps.Map('map', {
-             center: [55.832135, 37.628041],
-             zoom: 15,
-             controls: ['smallMapDefaultSet']
-         },
-         {
-             restrictMapArea: [
-                 [55.819519, 37.581011],
-                 [55.849442, 37.661223]
-             ]
-         },
-
+            center: [55.832135, 37.628041],
+            zoom: 15,
+            controls: ['smallMapDefaultSet']
+        },
+        {
+            restrictMapArea: [
+                [55.819519, 37.581011],
+                [55.849442, 37.661223]
+            ]
+        },
     );
     myMap.setType(myMapType)
 
@@ -44,22 +43,22 @@ ymaps.ready(['Heatmap']).then(function init(){
 
     var data = []
     for (var building of congestion) {
-        if(building != null){
+        if (building != null) {
             data.push({
-            type: 'Feature',
-            id: building.ObjectName,
-            geometry: {
-                type: 'Point',
-                coordinates: [building.Latitude, building.Longitude]
-            },
-            properties: {
-                weight: building[formatedDate]/congestion[0][formatedDate]*time
-            }
-        })
+                type: 'Feature',
+                id: building.ObjectName,
+                geometry: {
+                    type: 'Point',
+                    coordinates: [building.Latitude, building.Longitude]
+                },
+                properties: {
+                    weight: building[formatedDate] / congestion[0][formatedDate] * time
+                }
+            })
         }
     }
 
-    var heatmap = new ymaps.Heatmap(data,{
+    var heatmap = new ymaps.Heatmap(data, {
         radius: 27,
         opacity: 0.8,
         dissipating: false,
