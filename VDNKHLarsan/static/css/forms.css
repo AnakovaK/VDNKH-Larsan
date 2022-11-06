@@ -55,13 +55,13 @@
   transition: opacity 0.4s ease-in-out, background-color 0.4s ease-in-out;
 }
 
-.field__input:hover + .form__input-underline::after {
-  background-color: rgba(38, 38, 38, 0.2);
+.form__input:focus+.form__input-underline::after {
+  background-color: #285DE8;
   opacity: 1;
 }
 
-.form__input:focus + .form__input-underline::after {
-  background-color: #285DE8;
+.form__input:hover+.form__input-underline::after {
+  background-color: rgba(38, 38, 38, 0.2);
   opacity: 1;
 }
 
@@ -71,7 +71,7 @@
   background-color: #e22c38;
 }
 
-.form__input:focus + .form__input-underline_red::after {
+.form__input:focus+.form__input-underline_red::after {
   background-color: #D32A33;
 }
 

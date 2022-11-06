@@ -6,6 +6,7 @@ html {
 *::before,
 *::after {
   box-sizing: inherit;
+  font-family: 'Suisse Intl', sans-serif;
 }
 
 :root {
@@ -46,16 +47,28 @@ a {
   color: #fff;
 }
 
-.bd-placeholder-img {
-  font-size: 1.125rem;
-  text-anchor: middle;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  user-select: none;
+@media screen and (max-width: 992px) {
+  .section__title {
+    font-size: 72px;
+  }
 }
 
-@media (min-width: 768px) {
-  .bd-placeholder-img-lg {
-    font-size: 3.5rem;
+@media screen and (max-width: 576px) {
+  .page-title {
+    font-size: 62px;
+  }
+
+  .section__title {
+    font-size: 48px;
+  }
+}
+
+@media screen and (max-width: 360px) {
+  .page-title {
+    font-size: 55px;
+  }
+
+  .section__title {
+    font-size: 40px;
   }
 }

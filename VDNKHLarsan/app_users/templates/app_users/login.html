@@ -21,7 +21,6 @@
 {% block content %}
 <section class="section">
   <div class="section__container container-fluid">
-    <a href="{% url 'home' %}">На главную</a>
     <form class="form" action="{% url 'login' %}" method="post">
       {% csrf_token %}
 
