@@ -13,10 +13,10 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 from dotenv import load_dotenv
 from pathlib import Path
 import os
-from boto.s3.connection import S3Connection
+import dj_database_url
 
 load_dotenv()
-s3 = S3Connection(os.environ['S3_KEY'], os.environ['S3_SECRET'])
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -33,7 +33,6 @@ SECRET_KEY = os.environ.get(
 DEBUG = bool(os.environ.get('DJANGO_DEBUG', True))
 
 ALLOWED_HOSTS = ['vdnhlarsan.herokuapp.com', '127.0.0.1']
-
 
 # Application definition
 
@@ -80,19 +79,25 @@ TEMPLATES = [
 WSGI_APPLICATION = 'VDNKHLarsan.wsgi.application'
 
 
+
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
 
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': S3Connection(os.environ['DJANGO_DATABASE_NAME']),
-        'USER': S3Connection(os.environ['DJANGO_DATABASE_USER']),
-        'PASSWORD': S3Connection(os.environ['DJANGO_DATABASE_PASSWORD']),
-        'HOST': S3Connection(os.environ['DJANGO_DATABASE_HOST']),
-        'PORT': S3Connection(os.environ['DJANGO_DATABASE_PORT'])
+        'HOST': os.environ.get('POSTGRES_HOST'),
+        'NAME': os.environ.get('POSTGRES_DB'),
+        'USER': os.environ.get('POSTGRES_USER'),
+        'PASSWORD': os.environ.get('POSTGRES_PASSWORD'),
+        'PORT': os.environ.get('POSTGRES_PORT'),
     }
+
 }
+
+db_from_env = dj_database_url.config(conn_max_age=500)
+DATABASES['default'].update(db_from_env)
+
 
 # Password validation
 # https://docs.djangoproject.com/en/4.0/ref/settings/#auth-password-validators
@@ -112,7 +117,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/4.0/topics/i18n/
 
@@ -123,7 +127,6 @@ TIME_ZONE = 'UTC'
 USE_I18N = True
 
 USE_TZ = True
-
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.0/howto/static-files/

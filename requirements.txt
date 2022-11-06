@@ -9,4 +9,4 @@ whitenoise==6.2.0
 # Environment
 python-dotenv==0.21.0
 gunicorn==20.1.0
-boto~=2.49.0
+dj-config-url~=0.1.1
