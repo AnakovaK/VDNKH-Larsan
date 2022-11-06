@@ -16,7 +16,7 @@ import os
 from boto.s3.connection import S3Connection
 
 load_dotenv()
-
+s3 = S3Connection(os.environ['S3_KEY'], os.environ['S3_SECRET'])
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
