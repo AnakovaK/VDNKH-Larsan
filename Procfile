@@ -1,1 +1,1 @@
-web:gunicorn VDNKHLarsan.wsgi
+web:gunicorn vdnhlarsan.wsgi
