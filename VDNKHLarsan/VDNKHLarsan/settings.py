@@ -13,6 +13,7 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 from dotenv import load_dotenv
 from pathlib import Path
 import os
+from boto.s3.connection import S3Connection
 
 load_dotenv()
 
@@ -85,11 +86,11 @@ WSGI_APPLICATION = 'VDNKHLarsan.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': os.getenv('DJANGO_DATABASE_NAME', 'define me!'),
-        'USER': os.getenv('DJANGO_DATABASE_USERNAME', 'define me!'),
-        'PASSWORD': os.getenv('DJANGO_DATABASE_PASSWORD', 'define me!'),
-        'HOST': os.getenv('DJANGO_DATABASE_HOST', '0.0.0.0'),
-        'PORT': '5432'
+        'NAME': S3Connection(os.environ['DJANGO_DATABASE_NAME']),
+        'USER': S3Connection(os.environ['DJANGO_DATABASE_USER']),
+        'PASSWORD': S3Connection(os.environ['DJANGO_DATABASE_PASSWORD']),
+        'HOST': S3Connection(os.environ['DJANGO_DATABASE_HOST']),
+        'PORT': S3Connection(os.environ['DJANGO_DATABASE_PORT'])
     }
 }
 
