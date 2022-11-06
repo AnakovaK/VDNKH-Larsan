@@ -114,7 +114,7 @@ function init() {
             properties: {
                 balloonContentHeader: place.properties.title,
                 balloonContentBody: `<img src="${image}">`,
-                balloonContentFooter: `<button type="button" value="${place.id}" id = "addToRoute" onClick="window.location.reload();">Добавить в маршрут</button>`,
+                balloonContentFooter: ``,
                 iconImageHref: placemarkIconsInactive[placeKey],
                 iconCaption: place.properties.show_title,
                 iconImageSize: chooseSize(place),
@@ -151,16 +151,6 @@ function init() {
                 iconImageSize: [35, 45]
             })
             balloonIdOnClick = places[parseInt(placeKeys[objectId])].id
-            $("#addToRoute").bind({
-                click: function () {
-                    var vl = $(this).val()
-                    var title = places[vl].properties.title
-                    var siteUrl = places[vl].properties.url
-                    var imgUrl = places[vl].properties.pic
-                    var ticketUrl = places[vl].properties.tickets_link
-                    onClickAddRoute(vl, title, siteUrl, imgUrl, ticketUrl)
-                }
-            })
         } else if (e.get('type') == 'balloonclose') {
             objectManager.objects.setObjectOptions(objectId, {
                 iconImageHref: placemarkIconsInactive[objectId],
@@ -226,25 +216,6 @@ function init() {
     myMap.controls.remove("typeSelector")
     myMap.controls.remove("rulerControl")
     myMap.controls.remove("searchControl")
-}
-
-function onClickAddRoute(placeId, title, siteUrl, imgUrl, ticketUrl) {
-    $.ajax({
-        method: "POST",
-        url: "",
-        data: {
-            'placeId': placeId,
-            'title': title,
-            'siteUrl': siteUrl,
-            'imgUrl': imgUrl,
-            'ticketUrl': ticketUrl
-        },
-        success: function (data) {
-        },
-        error: function (data, textStatus, errorThrown) {
-
-        }
-    })
 }
 
 function chooseSize(placeObj) {

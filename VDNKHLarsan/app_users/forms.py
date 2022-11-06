@@ -37,25 +37,3 @@ class ProfileForm(forms.ModelForm):
         super().__init__(*args, **kwargs)
         for visible in self.visible_fields():
             visible.field.widget.attrs['class'] = 'form__input'
-
-
-class WalkRequirementsForm(forms.Form):
-    WALKING = (
-        ('f', 'быстрая'),
-        ('s', 'размеренная'),
-        ('i', 'только самое интересное'),
-    )
-    MONEY = (
-        ('f', 'бесплатно'),
-        ('p', 'можно платно'),
-        ('d', 'без разницы'),
-    )
-    MOVEMENT = (
-        ('f', 'пешком'),
-        ('e', 'на электробусах'),
-        ('d', 'без разницы'),
-    )
-
-    type_of_walking = forms.ChoiceField(choices=WALKING)
-    money = forms.ChoiceField(choices=MONEY)
-    movement = forms.ChoiceField(choices=MOVEMENT)

@@ -16,6 +16,7 @@
     <h1 class="page-title">{{ route.name }}</h1>
   </div>
 </div>
+
 {% endblock %}
 
 {% block map_detail %}
@@ -35,5 +36,19 @@
       {% endfor %}
     </ul>
   </div>
+
 </section>
+{% endblock %}
+
+{% block extra_js %}
+<script src="{% static 'js/routesObject.js' %}"></script>
+<script src="{% static 'js/places.js' %}"></script>
+<script>
+  var routeData = [
+    {% for place in route.places.all %}
+      {{ place.id|safe }},
+    {% endfor %}
+  ]
+</script>
+<script src="{% static 'js/popularroute.js' %}"></script>
 {% endblock %}

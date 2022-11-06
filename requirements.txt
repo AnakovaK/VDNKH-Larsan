@@ -6,7 +6,6 @@ psycopg2==2.9.5
 django-taggit==3.0.0
 
 #Forms
-django-crispy-forms==1.13.0
 crispy-bootstrap5==0.6
 
 # Environment
