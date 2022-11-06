@@ -1,0 +1,54 @@
+{% extends 'app_main/map/map.html' %}
+{% load static %}
+
+{% block map_title %}{{ route.name }}{% endblock %}
+
+{% block map_extra_css %}
+<link rel="stylesheet" href="{% static 'css/route-detail.css' %}">
+{% endblock %}
+
+{% block map_top %}
+<div class="top route-top" style="background-image: url('{{ route.detail_pic_url }}');">
+  <div class="top__container container-fluid d-flex flex-column">
+    <div class="route-link-container">
+      <a class="route-link" href="{% url 'route-list' %}">< Назад</a>
+    </div>
+    <h1 class="page-title">{{ route.name }}</h1>
+  </div>
+</div>
+
+{% endblock %}
+
+{% block map_detail %}
+<section class="section">
+  <div class="container-fluid">
+    <div class="route-text">
+      {{ route.detail_text|safe }}
+    </div>
+  </div>
+</section>
+<section class="section">
+  <div class="container-fluid">
+    <h2 class="places-title">Точки маршрута:</h2>
+    <ul class="place-list list-reset">
+      {% for place in route.places.all %}
+        <li class="place-item">{{ place }}</li>
+      {% endfor %}
+    </ul>
+  </div>
+
+</section>
+{% endblock %}
+
+{% block extra_js %}
+<script src="{% static 'js/routesObject.js' %}"></script>
+<script src="{% static 'js/places.js' %}"></script>
+<script>
+  var routeData = [
+    {% for place in route.places.all %}
+      {{ place.id|safe }},
+    {% endfor %}
+  ]
+</script>
+<script src="{% static 'js/popularroute.js' %}"></script>
+{% endblock %}

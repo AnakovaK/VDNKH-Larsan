@@ -1,0 +1,37 @@
+.content {
+  width: 50%;
+  background-color: var(--col_1);
+}
+
+.page-title {
+  margin-bottom: 32px;
+}
+
+.map {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  width: 50%;
+  height: 100vh;
+}
+
+#addToRoute {
+  border: none;
+  border-radius: 4px;
+  background-color: var(--col_1);
+  color: #fff;
+  transition: background-color 0.4s ease-in-out;
+}
+
+#addToRoute:focus {
+  background-color: #ff0011;
+}
+
+#addToRoute:hover {
+  background-color: #dd4953;
+}
+
+#addToRoute:active {
+  background-color: #ff0011;
+}

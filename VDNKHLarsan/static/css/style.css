@@ -1,0 +1,233 @@
+.landing-image {
+  width: 100%;
+}
+
+.section {
+  padding: 8px 0 80px;
+}
+
+.section__title {
+  font-family: 'VDNHLebedev2', sans-serif;
+  font-weight: 400;
+  font-size: 84px;
+  margin-bottom: 33px;
+  line-height: 84px;
+}
+
+.section__descr {
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 28px;
+}
+
+
+/* Первая секция */
+.hero {}
+
+.hero__link {
+  color: #fff;
+  transition: color 0.4s ease-in-out;
+}
+
+.hero__link:hover {
+  color: #bebebe;
+}
+
+.hero__descr {
+  font-weight: 500;
+  font-size: 18px;
+}
+
+/* Маршруты */
+.routes {
+  background-color: var(--col_2);
+}
+
+.route-list {
+  flex-wrap: wrap;
+}
+
+.route {
+  padding: 0;
+  margin-bottom: 20px;
+}
+
+.route__wrapper:not(:nth-child(4n)) {
+  margin-right: 25px;
+}
+
+.route__wrapper {
+  padding: 20px;
+  height: 100%;
+  background-color: #fff;
+  border-radius: 4px;
+  transition: background-color 0.4s ease-in-out;
+}
+
+.route__wrapper:focus {
+  border: none;
+  background-color: #fff8f6;
+}
+
+.route__wrapper:hover {
+  background-color: #dedede;
+}
+
+.route__wrapper:active {
+  background-color: #fff8f6;
+}
+
+.route__title {
+  height: 80px;
+  margin-bottom: 33px;
+  font-weight: 500;
+  font-size: 36px;
+  line-height: 40px;
+  color: #262626;
+}
+
+.route__img {
+  max-width: 100%;
+  margin: 0 auto;
+}
+
+.routes__link {
+  font-family: 'VDNHLebedev2', sans-serif;
+  font-weight: 700;
+  font-size: 32px;
+  color: #262626;
+}
+
+
+/* Как это работает? */
+.how-it-works {
+  background-color: var(--col_1);
+  color: #fff;
+}
+
+
+/* Choice */
+.choice {
+  background-color: var(--col_1);
+}
+
+.choice__title {
+  color: #fff;
+}
+
+.features-list {
+  flex-wrap: wrap;
+  justify-content: flex-start;
+}
+
+.feature {
+  padding: 0;
+}
+
+.feature__wrapper:not(:nth-of-type(3n)) {
+  margin-right: 32px;
+}
+
+.feature__wrapper {
+  height: 350px;
+  margin-bottom: 20px;
+  padding: 26px 30px;
+  background-color: #fff;
+  border-radius: 4px;
+}
+
+.feature__title {
+  height: 80px;
+  margin-bottom: 33px;
+  font-weight: 500;
+  font-size: 36px;
+  line-height: 40px;
+  color: #262626;
+}
+
+.feature__descr {
+  font-weight: 400;
+  font-size: 24px;
+  color: #262626;
+}
+
+
+/* Прогулка */
+.walking {
+  padding: 25px 0 80px;
+  background-color: var(--col_1);
+}
+
+.walking__wrapper {
+  width: 40%;
+  padding: 25px;
+  background-color: #fff;
+  border-radius: 4px;
+}
+
+.walking__title {
+  max-width: 890px;
+  height: 192px;
+  font-size: 40px;
+  line-height: 40px;
+}
+
+.walking__link {
+  padding: 13px 110px;
+  background-color: var(--col_1);
+  border-radius: 4px;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 20px;
+  color: #fff;
+  transition: background-color 0.4s ease-in-out;
+}
+
+.walking__link:focus {
+  background-color: #aa222b;
+}
+
+.walking__link:hover {
+  background-color: #e4202d;
+  color: #fff;
+}
+
+.walking__link:active {
+  background-color: #aa222b;
+}
+
+@media screen and (max-width: 1200px) {
+  .route__title {
+    font-size: 24px;
+  }
+}
+
+@media screen and (max-width: 992px) {
+  .walking__wrapper {
+    width: 100%;
+  }
+
+  .walking__title {
+    font-size: 40px;
+  }
+}
+
+@media screen and (max-width: 768px) {}
+
+@media screen and (max-width: 576px) {
+  .route__wrapper {
+    margin: 0 !important;
+  }
+  
+  .feature {
+    margin-bottom: 20px;
+  }
+
+  .feature__wrapper {
+    margin: 0 !important;
+  }
+
+  .walking__link {
+    padding: 13px 50px;
+  }
+}

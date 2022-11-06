@@ -1,0 +1,6 @@
+#All project functionality requirements
+-r requirements.txt
+
+#Documentation
+#Will be: Sphinx==4.4.0
+# sphinx-rtd-theme==1.0.0

@@ -1,15 +1,84 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-	<meta charset="UTF-8">
-	<title>{{ user.username }}</title>
-</head>
-<body>
-	<a href="{% url 'home' %}">На главную</a>
-	<h1>{{ user.username }} <{{user.id}}></h1>
-	<a href="{% url 'logout' %}">Выйти</a>
-	<p>Имя: {{ user.first_name }}</p>
-	<p>Фамилия: {{ user.last_name }}</p>
-	<p>{{ user.email }}</p>
-</body>
-</html>
+{% extends "app_main/base.html" %}
+{% load static %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/profile.css' %}">
+{% endblock %}
+
+{% block title %}
+<title>{{ user.username }}</title>
+{% endblock %}
+
+{% block top %}
+<div class="top">
+  <div class="container-fluid">
+    <h1 class="page-title">{{ profile.username }}</h1>
+    <div class="profile__redact">
+      <a class="btn profile__btn" href="{% url 'profile-redact' profile.id %}">Редактировать</a>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block content %}
+<section class="section fields">
+  <div class="section__container container-fluid">
+    <ul class="field-list list-reset">
+      <div class="row">
+        <li class="field col-md-4">Имя: {{ profile.first_name }}</li>
+        <li class="field col-md-4">Фамилия: {{ profile.last_name }}</li>
+        <li class="field col-md-4">Отчество: {{ profile.patronymic }}</li>
+        <li class="field col-md-4">Дата рождения: {{ profile.born }}</li>
+        <li class="field col-md-4">Email: {{ profile.email }}</li>
+      </div>
+
+      <li class="field tags">
+        <h2 class="tags__title">Отмеченные Вами интересы:</h2>
+
+        {% if user.tags.all %}
+        <ul class="tags__list">
+          {% for tag in user.tags.all %}
+          <li class="tags__item">{{ tag }}</li>
+          {% endfor %}
+        </ul>
+        {% else %}
+        <p class="tags-descr">\/ Пока отмеченных интересов нет! Добавьте! \/</p>
+        {% endif %}
+
+        <div class="dropdown">
+          <button class="btn profile__btn profile__btn_2" type="button" id="dropdownMenuButton2" data-bs-toggle="dropdown"
+            aria-haspopup="true" aria-expanded="false">+ Добавить интересы
+          </button>
+          <div class="dropdown-menu" aria-labelledby="dropdownMenuButton2">
+            {% if all_tags %}
+            {% for tag in all_tags %}
+            <form action="{% url 'addtag' user.id %}" method="post">
+              {% csrf_token %}
+              <input name="add_tag" value="{{tag}}" type="submit" />
+            </form>
+            {% endfor %}
+            {% else %}
+            <span class="no-more-tags">Тегов больше нет!</span>
+            {% endif %}
+          </div>
+        </div>
+      </li>
+    </ul>
+  </div>
+</section>
+
+<section class="section routes">
+  <div class="section__container container-fluid">
+    <h2 class="routes-title">Маршруты:</h2>
+    <ul class="route-list">
+      {% for route in user.custom_routes.all %}
+      <li class="route"><a href="{% url 'custom-route-detail' user_id=user.id pk=route.id %}">Маршрут №{{ route.id }}</a></li>
+      {% endfor %}
+    </ul>
+    <form action="{% url 'custom-route_create' user.id %}" method="post">
+      {% csrf_token %}
+      <button class="btn profile__btn" type="submit" name="create_route">Построить свой маршрут</button>
+    </form>
+  </div>
+</section>
+{% endblock %}

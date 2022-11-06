@@ -1,0 +1,36 @@
+.header {
+  z-index: 1000;
+  height: 80px;
+}
+
+.navbar__container {
+  margin-right: calc(var(--bs-gutter-x) * .5);
+  margin-left: calc(var(--bs-gutter-x) * .5);
+  background-color: #fff;
+  border-radius: 4px;
+  box-shadow: 0px 0px 12px rgb(0 0 0 / 4%), 0px 12px 12px rgb(0 0 0 / 4%);
+}
+
+.logo {
+  width: 80px;
+  height: 80px;
+  background-image: url('https://vdnh.ru/local/templates/v3_new_header/images/logo.svg');
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.navbar-brand {
+  border-radius: 4px;
+}
+
+.nav-item:not(:last-child){
+  margin-right: 32px;
+}
+
+.nav-link {
+  font-family: 'Suisse Intl', sans-serif;
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 24px;
+  color: var(--col_1);
+}

@@ -1,16 +1,56 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-	<meta charset="UTF-8">
-	<title>Войти</title>
-</head>
-<body>
-	<a href="{% url 'home' %}">На главную</a>
-	<h1>Войти</h1>
-	<form action="{% url 'login' %}" method="post">
-		{% csrf_token %}
-		{{ form.as_p }}
-		<button type="submit">Войти</button>
-	</form>
-</body>
-</html>
+{% extends "app_main/base.html" %}
+{% load static %}
+
+{% block title %}
+<title>Войти</title>
+{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/forms.css' %}">
+{% endblock %}
+
+{% block top %}
+<div class="top">
+  <div class="container-fluid">
+    <h1 class="page-title">Войти</h1>
+    <p class="top__text" style="color:#fff">Нет учётной записи? <a style="text-decoration: underline;" href="{% url 'sign-up' %}">Зарегистрируйтесь!</a></p>
+  </div>
+</div>
+{% endblock %}
+
+{% block content %}
+<section class="section">
+  <div class="section__container container-fluid">
+    <form class="form" action="{% url 'login' %}" method="post">
+      {% csrf_token %}
+
+      {% if form.non_field_errors %}
+      <ul class="form__field-error-list list-reset">
+        {% for err in form.non_field_errors %}
+        <li class="form__fields-error">{{ err|escape }}</li>
+        {% endfor %}
+      </ul>
+      {% endif %}
+
+      {% for input in form %}
+      <div class="form__field">
+        <label class="form__label" for="{{ input.id_for_label }}">{{ input.label }}:</label>
+        {{ input }}
+        <div class="form__input-underline" id="{{ input.id_for_label }}-underline"></div>
+        <ul class="form__errors-wrapper list-reset">
+          {% for err in input.errors %}
+          <li class="form__fields-error">{{ err }}</li>
+          {% endfor %}
+        </ul>
+      </div>
+      {% endfor %}
+
+      <button class="form__submit-btn btn-reset" type="submit">Войти</button>
+    </form>
+  </div>
+</section>
+{% endblock %}
+
+{% block extra_js %}
+{% include 'app_main/form-script.html' %}
+{% endblock %}

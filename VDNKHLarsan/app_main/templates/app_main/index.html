@@ -1,18 +1,114 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-	<meta charset="UTF-8">
-	<title>Главная</title>
-</head>
-<body>
-  <h1>Главная страница</h1>
-	{% if request.user.is_authenticated %}
-		<h2>Добро пожаловать, <a href="{% url 'profile' user.id %}">{{ request.user.username }}
-		<a href="{% url 'logout' %}">Выйти</a><br>
-	{% else %}
-		<h2>Вы не авторизованы на сайте, пожалуйста войдите в учётную запись:</h2>
-		<a href="{% url 'login' %}">Войти</a>
-		<p>Нет учётной записи? <a href="{% url 'sign-up' %}">Зарегистрируйтесь!</a></p>
-	{% endif %}
-</body>
-</html>
+{% extends "app_main/base.html" %}
+{% load static %}
+
+{% block title %}
+<title>Главная</title>
+{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/style.css' %}">
+{% endblock %}
+
+{% block content %}
+<img class="landing-image" src="{% static 'img/landing-image.jpg' %}" alt="">
+<section class="section hero">
+  <div class="section__container container-fluid">
+    <h1 class="page-title">Главная страница</h1>
+    {% if request.user.is_authenticated %}
+    <h2>Добро пожаловать, <a class="hero__link" href="{% url 'profile' user.id %}">{{ user.username }}!</a></h2>
+    {% else %}
+    <h2>Вы&nbsp;не&nbsp;авторизованы на&nbsp;сайте, пожалуйста войдите в&nbsp;учётную запись:</h2>
+    <div class="hero__descr">
+      <a class="hero__link" href="{% url 'login' %}">Войти</a>
+      <p>Нет учётной записи? <a class="hero__link" href="{% url 'sign-up' %}">Зарегистрируйтесь!</a></p>
+    </div>
+    {% endif %}
+  </div>
+</section>
+
+<section class="section how-it-works">
+  <div class="section__container container-fluid">
+    <h2 class="section__title">Как это работает?</h2>
+    <p class="section__descr">C помощью нашего сайта у Вас есть возможность построить свой собственный маршрут после
+      регистрации, купить билеты в нужные павильоны и посмотреть загруженность ВДНХ в реальном времени</p>
+  </div>
+</section>
+
+<section class="section routes">
+  <div class="section__container container-fluid">
+    <h2 class="section__title">Популярные маршруты</h2>
+    <ul class="route-list list-reset row">
+      {% for route in routes %}
+      <li class="route col-lg-3 col-md-6 col-sm-12">
+        <a class="route__link" href="{% url 'route-detail' route.code %}">
+          <div class="route__wrapper">
+            <h2 class="route__title">{{ route.name }}</h2>
+            <figure class="route__img">
+              <img class="route__img" src="{{ route.pic_url }}" alt="{{ route.name }}">
+            </figure>
+          </div>
+        </a>
+      </li>
+      {% endfor %}
+    </ul>
+    <a href="{% url 'route-list' %}" class="routes__link">К&nbsp;остальным маршрутам</a>
+  </div>
+</section>
+
+<section class="section choice">
+  <div class="section__container container-fluid">
+    <h2 class="section__title choice__title">Удобство выбора</h2>
+    <ul class="features-list list-reset row">
+      <li class="feature col-lg-4 col-md-6 col-sm-12">
+        <a href="{% url 'map' %}" class="feature__link">
+          <div class="feature__wrapper">
+            <h3 class="feature__title">Набор маршрута</h3>
+            <p class="feature__descr">Создайте собственный маршрут!</p>
+          </div>
+        </a>
+      </li>
+
+      <li class="feature col-lg-4 col-md-6 col-sm-12">
+        <a href="{% url 'heatmap' %}" class="feature__link">
+          <div class="feature__wrapper">
+            <h3 class="feature__title">Тепловая карта</h3>
+            <p class="feature__descr">Узнайте о&nbsp;загруженности на&nbsp;ВДНХ!</p>
+          </div>
+        </a>
+      </li>
+
+      <li class="feature col-lg-4 col-md-6 col-sm-12">
+        {% if request.user.is_authenticated %}
+        <a href="{% url 'profile' user.id %}" class="feature__link">
+          <div class="feature__wrapper">
+            <h3 class="feature__title">Профиль с&nbsp;интересами</h3>
+            <p class="feature__descr">Настройте прогулку под себя!</p>
+          </div>
+        </a>
+        {% else %}
+        <a href="{% url 'login' %}" class="feature__link">
+          <div class="feature__wrapper">
+            <h3 class="feature__title">Профиль с&nbsp;интересами</h3>
+            <p class="feature__descr">Войдите в&nbsp;профиль, чтобы настроить интересы!</p>
+          </div>
+        </a>
+        {% endif %}
+      </li>
+    </ul>
+  </div>
+</section>
+
+<section class="section walking">
+  <div class="section__container container-fluid">
+    <div class="walking__wrapper">
+      <h2 class="section__title walking__title">Готовы начать прогулку?</h2>
+      {% if request.user.is_authenticated %}
+      <a href="{% url 'profile' user.id %}" class="walking__link">Построить&nbsp;маршрут</a>
+      {% else %}
+      <a href="{% url 'login' %}" class="walking__link">Построить&nbsp;маршрут</a>
+      {% endif %}
+    </div>
+  </div>
+</section>
+
+{% endblock %}

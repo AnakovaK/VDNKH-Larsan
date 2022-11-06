@@ -1,0 +1,74 @@
+html {
+  box-sizing: border-box;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: inherit;
+  font-family: 'Suisse Intl', sans-serif;
+}
+
+:root {
+  --col_1: #e22c38;
+  --col_2: #f7eae6;
+}
+
+body {
+  background-color: var(--col_1);
+}
+
+a {
+  color: #fff;
+  text-decoration: none;
+}
+
+.list-reset {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.btn-reset {
+  padding: 0;
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+}
+
+.top {
+  padding-top: 104px;
+}
+
+.page-title {
+  font-family: 'VDNHLebedev2', sans-serif;
+  font-size: 84px;
+  font-weight: 400;
+  color: #fff;
+}
+
+@media screen and (max-width: 992px) {
+  .section__title {
+    font-size: 72px;
+  }
+}
+
+@media screen and (max-width: 576px) {
+  .page-title {
+    font-size: 62px;
+  }
+
+  .section__title {
+    font-size: 48px;
+  }
+}
+
+@media screen and (max-width: 360px) {
+  .page-title {
+    font-size: 55px;
+  }
+
+  .section__title {
+    font-size: 40px;
+  }
+}
