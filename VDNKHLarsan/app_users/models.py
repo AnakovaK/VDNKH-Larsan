@@ -23,9 +23,13 @@ class User(AbstractUser):
 
 class RoutePoint(models.Model):
     point = models.IntegerField()
+    title = models.CharField(max_length=255, blank=True)
+    site_url = models.CharField(max_length=255, blank=True)
+    img_url = models.CharField(max_length=255, blank=True)
+    ticket_url = models.CharField(max_length=255, blank=True)
 
     def __str__(self):
-        return str(self.point)
+        return str(self.title)
 
 
 class CustomRoute(models.Model):

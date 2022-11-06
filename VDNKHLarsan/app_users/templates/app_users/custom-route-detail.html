@@ -8,13 +8,23 @@
 <script src="{% static 'js/places.js' %}"></script>
 <section class="section">
     {% for point in route.route_points.all %}
-    <script>
-      var placeId = {{point}}
-      var element = document.getElementById('information')
-      element.innerText = places[placeId].properties.type
-    </script>
-      <p class="point-item">{{ point }}  </p>
-      <p id="information"></p>
+    <div class="card mb-3" style="margin-left:10px; margin-right:10px;">
+        <div class="row">
+            <div class="col-sm-2">
+                <img src="https://vdnh.ru{{point.img_url}}" style="width:80px; margin:10px;">
+            </div>
+            <div class="col-sm-6">
+                <div class="card-body">
+                    <a href="https://vdnh.ru{{ point.site_url }}" style="color: #e22c38">{{ point }}</a>
+                </div>
+                {% if point.ticket_url %}
+                    <div class="card-footer" style="margin-bottom:2px;">
+                        <a href="{{point.ticket_url}}" style="color: #e22c38;">Купить билет</a>
+                   </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
     {% endfor %}
 </section>
 {% endblock %}
@@ -24,10 +34,9 @@
 <script src="{% static 'js/routesObject.js' %}"></script>
 <script src="{% static 'js/places.js' %}"></script>
 <script>
-  var testTest = "testing..."
   var routeData = [
     {% for point in route.route_points.all %}
-      {{ point|safe }},
+      {{ point.point|safe }},
     {% endfor %}
   ]
 </script>
