@@ -30,11 +30,11 @@ function init() {
     })
 
     var IconLayoutClass = ymaps.templateLayoutFactory.createClass(
-        '<img class = "my-mark" width={{properties.iconImageSize[0]}} height={{properties.iconImageSize[1]}} src = {{properties.iconImageHref}}>'+
-        '{% if properties.textVisible == "Visible" %}'+
-        '<p id = "caption-text" style="margin-top: 10px; font-size: 0.9em; line-height: 0.9; margin-right: 10px"> {{properties.iconCaption}}</p>'+
-        '{% endif %}',{
-            build: function (){
+        '<img class = "my-mark" width={{properties.iconImageSize[0]}} height={{properties.iconImageSize[1]}} src = {{properties.iconImageHref}}>' +
+        '{% if properties.textVisible == "Visible" %}' +
+        '<p id = "caption-text" style="margin-top: 10px; font-size: 0.9em; line-height: 0.9; margin-right: 10px"> {{properties.iconCaption}}</p>' +
+        '{% endif %}', {
+            build: function () {
                 IconLayoutClass.superclass.build.call(this)
                 if (!this.inited) {
                     this.inited = true
@@ -101,43 +101,40 @@ function init() {
     cnt = 0;
     for (var placeKey in placeKeys) {
 
-     var place = places[parseInt(placeKeys[placeKey])]
-     var image = ADDRESS_PREFIX + place.properties.pic
-     if (!(categorites.includes(place.properties.type_s1))){
-        categorites.push(place.properties.type_s1)
-     }
-     placemarkIconsInactive[placeKey] = "http://127.0.0.1:8000/static/img/icons/inactive/" + place.properties.icon + ".svg"
-     placemarkIconsActive[placeKey] = "http://127.0.0.1:8000/static/img/icons/active/" + place.properties.icon + "-active.svg"
-     objectManager.add({
-         type: 'Feature',
-         id: placeKey,
-         geometry: {
-             type: 'Point',
-             coordinates: place.geometry.coordinates.reverse(),
-         },
-         properties: {
-             balloonContentHeader: place.properties.title,
-             balloonContentBody: `<img src="${image}">`,
-             balloonContentFooter: `<button type="button" value="${place.id}" id = "addToRoute" onClick="window.location.reload();">Добавить в маршрут</button>`,
-             iconImageHref: placemarkIconsInactive[placeKey],
-             iconCaption: place.properties.show_title,
-             iconImageSize: chooseSize(place),
-             textVisible: "Invisible",
-             type: place.properties.type,
-         },
-         options: {
-             iconLayout: IconLayoutClass,
-             iconShape:{
-               type: "Circle",
-                 coordinates: [0,0],
-                 radius: chooseSize(place)[0] + 5
-             },
-             iconImageHref: placemarkIconsInactive[placeKey],
-             iconImageSize: chooseSize(place),
-             hideIconOnBalloonOpen: false,
-         }
-     })
- }
+        var place = places[parseInt(placeKeys[placeKey])]
+        var image = ADDRESS_PREFIX + place.properties.pic
+        placemarkIconsInactive[placeKey] = "http://127.0.0.1:8000/static/img/icons/inactive/" + place.properties.icon + ".svg"
+        placemarkIconsActive[placeKey] = "http://127.0.0.1:8000/static/img/icons/active/" + place.properties.icon + "-active.svg"
+        objectManager.add({
+            type: 'Feature',
+            id: placeKey,
+            geometry: {
+                type: 'Point',
+                coordinates: place.geometry.coordinates.reverse(),
+            },
+            properties: {
+                balloonContentHeader: place.properties.title,
+                balloonContentBody: `<img src="${image}">`,
+                balloonContentFooter: `<button type="button" value="${place.id}" id = "addToRoute" onClick="window.location.reload();">Добавить в маршрут</button>`,
+                iconImageHref: placemarkIconsInactive[placeKey],
+                iconCaption: place.properties.show_title,
+                iconImageSize: chooseSize(place),
+                textVisible: "Invisible",
+                type: place.properties.type,
+            },
+            options: {
+                iconLayout: IconLayoutClass,
+                iconShape: {
+                    type: "Circle",
+                    coordinates: [0, 0],
+                    radius: chooseSize(place)[0] + 5
+                },
+                iconImageHref: placemarkIconsInactive[placeKey],
+                iconImageSize: chooseSize(place),
+                hideIconOnBalloonOpen: false,
+            }
+        })
+    }
 
     objectManager.setFilter(function (object) {
         return tierOneCategories.includes(object.properties.type)
@@ -146,30 +143,31 @@ function init() {
     myMap.geoObjects.add(objectManager)
     var balloonIdOnClick;
 
-     function onObjectEvent(e) {
-         var objectId = e.get('objectId');
-         console.log(places[parseInt(placeKeys[objectId])].geometry.coordinates.reverse())
-         if (e.get('type') == 'balloonopen') {
-             objectManager.objects.setObjectOptions(objectId, {
-                 iconImageHref: placemarkIconsActive[objectId],
-                 iconImageSize: [35, 45]
-             })
-             balloonIdOnClick = places[parseInt(placeKeys[objectId])].id
-             $("#addToRoute").bind({
-                click : function (){
-                var vl = $(this).val()
-                var title = places[vl].properties.title
-                var siteUrl = places[vl].properties.url
-                var imgUrl = places[vl].properties.pic
-                var ticketUrl = places[vl].properties.tickets_link
-                onClickAddRoute(vl, title, siteUrl, imgUrl, ticketUrl)
-             }})
-         } else if (e.get('type') == 'balloonclose') {
-             objectManager.objects.setObjectOptions(objectId, {
-                 iconImageHref: placemarkIconsInactive[objectId],
-                 iconImageSize: [25, 35]
-             })
-         }
+    function onObjectEvent(e) {
+        var objectId = e.get('objectId');
+        console.log(places[parseInt(placeKeys[objectId])].geometry.coordinates.reverse())
+        if (e.get('type') == 'balloonopen') {
+            objectManager.objects.setObjectOptions(objectId, {
+                iconImageHref: placemarkIconsActive[objectId],
+                iconImageSize: [35, 45]
+            })
+            balloonIdOnClick = places[parseInt(placeKeys[objectId])].id
+            $("#addToRoute").bind({
+                click: function () {
+                    var vl = $(this).val()
+                    var title = places[vl].properties.title
+                    var siteUrl = places[vl].properties.url
+                    var imgUrl = places[vl].properties.pic
+                    var ticketUrl = places[vl].properties.tickets_link
+                    onClickAddRoute(vl, title, siteUrl, imgUrl, ticketUrl)
+                }
+            })
+        } else if (e.get('type') == 'balloonclose') {
+            objectManager.objects.setObjectOptions(objectId, {
+                iconImageHref: placemarkIconsInactive[objectId],
+                iconImageSize: [25, 35]
+            })
+        }
 
 
     }
@@ -231,26 +229,27 @@ function init() {
     myMap.controls.remove("searchControl")
 }
 
- function onClickAddRoute(placeId, title, siteUrl, imgUrl, ticketUrl){
-     console.log("Hello button!")
-     console.log(placeId)
-     $.ajax({
-         method: "POST",
-         url: "",
-         data: {
-             'placeId': placeId,
-             'title': title,
-             'siteUrl': siteUrl,
-             'imgUrl': imgUrl,
-             'ticketUrl': ticketUrl
-         },
-         success: function (data){},
-         error: function (data, textStatus, errorThrown){
-             console.log(textStatus)
-             console.log(errorThrown)
-         }
-     })
- }
+function onClickAddRoute(placeId, title, siteUrl, imgUrl, ticketUrl) {
+    console.log("Hello button!")
+    console.log(placeId)
+    $.ajax({
+        method: "POST",
+        url: "",
+        data: {
+            'placeId': placeId,
+            'title': title,
+            'siteUrl': siteUrl,
+            'imgUrl': imgUrl,
+            'ticketUrl': ticketUrl
+        },
+        success: function (data) {
+        },
+        error: function (data, textStatus, errorThrown) {
+            console.log(textStatus)
+            console.log(errorThrown)
+        }
+    })
+}
 
 function chooseSize(placeObj) {
     if (placeObj.properties.type == "Павильон") {
