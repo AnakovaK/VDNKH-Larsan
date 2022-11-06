@@ -194,6 +194,12 @@
   background-color: #aa222b;
 }
 
+@media screen and (max-width: 1200px) {
+  .route__title {
+    font-size: 24px;
+  }
+}
+
 @media screen and (max-width: 992px) {
   .walking__wrapper {
     width: 100%;
