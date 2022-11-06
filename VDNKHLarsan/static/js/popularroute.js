@@ -114,7 +114,7 @@ function init() {
             properties: {
                 balloonContentHeader: place.properties.title,
                 balloonContentBody: `<img src="${image}">`,
-                balloonContentFooter: `<button type="button" value="${place.id}" id = "addToRoute" onClick="window.location.reload();">Добавить в маршрут</button>`,
+                balloonContentFooter: ``,
                 iconImageHref: placemarkIconsInactive[placeKey],
                 iconCaption: place.properties.show_title,
                 iconImageSize: chooseSize(place),
