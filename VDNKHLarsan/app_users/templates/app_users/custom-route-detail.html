@@ -4,6 +4,7 @@
 {% block map_title %}Маршрут №{{ route.id }}{% endblock %}
 
 {% block map_detail %}
+
 <script src="{% static 'js/places.js' %}"></script>
 <section class="section">
     {% for point in route.route_points.all %}
