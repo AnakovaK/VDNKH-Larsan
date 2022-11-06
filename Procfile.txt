@@ -1,1 +1,1 @@
-web:gunicorn VDNKH-Larsan-Forked.wsgi
+web:gunicorn VDNKHLarsan.wsgi
