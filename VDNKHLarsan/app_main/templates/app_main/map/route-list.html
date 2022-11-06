@@ -21,8 +21,6 @@
       {% endfor %}
     </ul>
   </div>
-
-
 </section>
 {% endblock %}
 
@@ -31,22 +29,5 @@
 <script src="{% static 'js/jquery-3.6.1.js' %}"></script>
 <script src="{% static 'js/routesObject.js' %}"></script>
 <script src="{% static 'js/places.js' %}"></script>
-<script>
-  var testTest = "testing..."
-  var routeData = [
-    {% for point in route %}
-      {{ point|safe }},
-    {% endfor %}
-  ]
-  // window.onload = function () {
-  // var cnt = 0;
-  // var routeData = [
-  //   {% for point in route %}
-  //     {{ point|safe }},
-  //   {% endfor %}
-  // ]
-  // console.log(data)
-  //}
-</script>
-<script src="{% static 'js/customroute.js' %}"></script>
+<script src="{% static 'js/popularroute.js' %}"></script>
 {% endblock %}

@@ -1,5 +1,4 @@
 from django.contrib.auth import login, authenticate
-# from django.contrib.auth.models import User
 from django.contrib.auth.views import LoginView, LogoutView
 from django.http import HttpResponseRedirect, JsonResponse
 from django.shortcuts import render

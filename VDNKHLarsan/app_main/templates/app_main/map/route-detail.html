@@ -35,5 +35,20 @@
       {% endfor %}
     </ul>
   </div>
+    <div class="map" id="map" style="margin-top: 105px"></div>
+S
 </section>
+{% endblock %}
+
+{% block extra_js %}
+<script src="{% static 'js/routesObject.js' %}"></script>
+<script src="{% static 'js/places.js' %}"></script>
+<script>
+  var routeData = [
+    {% for place in route.places.all %}
+      {{ place.id|safe }},
+    {% endfor %}
+  ]
+</script>
+<script src="{% static 'js/popularroute.js' %}"></script>
 {% endblock %}
