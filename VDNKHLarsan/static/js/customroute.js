@@ -12,7 +12,6 @@ var tierThreeCategories = ['Павильон', 'Въезд', 'Еда', 'Разв
 ymaps.ready(init)
 
 function init() {
-    console.log(routeData)
     var test = 0;
     for (var item of routeData) {
         coords[test] = places[item].geometry.coordinates.reverse();
@@ -230,8 +229,6 @@ function init() {
 }
 
 function onClickAddRoute(placeId, title, siteUrl, imgUrl, ticketUrl) {
-    console.log("Hello button!")
-    console.log(placeId)
     $.ajax({
         method: "POST",
         url: "",
@@ -245,8 +242,7 @@ function onClickAddRoute(placeId, title, siteUrl, imgUrl, ticketUrl) {
         success: function (data) {
         },
         error: function (data, textStatus, errorThrown) {
-            console.log(textStatus)
-            console.log(errorThrown)
+
         }
     })
 }
