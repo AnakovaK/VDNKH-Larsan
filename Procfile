@@ -1,2 +1,2 @@
-web: gunicorn vdnhlarsan.wsgi
+web: gunicorn vdnhlarsan.wsgi :application
 web: python VDNKHLarsan/manage.py runserver
