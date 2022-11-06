@@ -30,17 +30,17 @@
 <section class="section routes">
   <div class="section__container container-fluid">
     <h2 class="section__title">Популярные маршруты</h2>
-    <ul class="route-list list-reset">
-      <!-- {% for route in routes %} -->
-      <!-- {% endfor %} -->
+    <ul class="route-list list-reset d-flex">
+      {% for route in routes %}
       <li class="route">
-        <a href="#" class="route__link">
-          <div class="route__wrapper">
-            <h3 class="route__title">ВДНХ о России</h3>
-            <!-- <img src="{{ route.pic_url }}" alt="" srcset=""> -->
-          </div>
+        <a href="{% url 'route-detail' route.code %}">
+          <h2 class="route__title">{{ route.name }}</h2>
+          <figure class="route__img">
+            <img class="route__img" src="{{ route.pic_url }}" alt="">
+          </figure>
         </a>
       </li>
+      {% endfor %}
     </ul>
   </div>
 </section>
