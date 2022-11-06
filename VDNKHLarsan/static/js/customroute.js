@@ -33,7 +33,7 @@ function init(){
     var IconLayoutClass = ymaps.templateLayoutFactory.createClass(
         '<img class = "my-mark" width={{properties.iconImageSize[0]}} height={{properties.iconImageSize[1]}} src = {{properties.iconImageHref}}>'+
         '{% if properties.textVisible == "Visible" %}'+
-        '<p id = "caption-text" style="margin-top: 10px; font-size: 0.9em; line-height: 0.9; margin-right: 10px"> {{properties.iconCaption}}</p>'+
+        '<p id = "caption-text" style="padding-right:100px; text-align: center; font-size: 0.9em; line-height: 1; margin:0px; text-shadow: 0 0 3px #fff;"> {{properties.iconCaption}}</p>'+
         '{% endif %}',{
             build: function (){
                 IconLayoutClass.superclass.build.call(this)
