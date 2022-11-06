@@ -58,7 +58,8 @@
   margin-right: 15px;
 }
 
-.routes, .fields {
+.routes,
+.fields {
   font-family: 'Suisse Intl', sans-serif;
 }
 
@@ -75,10 +76,10 @@
   line-height: 32px;
 }
 
-.route:hover{
+.route:hover {
   color: #fff;
 }
 
-.route:hover a{
+.route:hover a {
   color: #e5e5e5;
 }

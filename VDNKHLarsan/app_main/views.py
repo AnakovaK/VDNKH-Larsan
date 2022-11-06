@@ -13,7 +13,7 @@ class IndexView(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['routes'] = Route.objects.all()
+        context['routes'] = Route.objects.all()[:4]
         return context
 
 
@@ -108,7 +108,8 @@ class UploadPlacesRoutesFormView(FormView):
                         detail_text=detail_text,
                     )
                     for item in route['items']:
-                        route_obj.places.add(Place.objects.get(id=item['place']))
+                        route_obj.places.add(Place.objects.get(
+                            id=item['place']))
                 route_obj.save()
             except KeyError:
                 continue
