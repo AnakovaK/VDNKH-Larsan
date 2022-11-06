@@ -55,13 +55,13 @@ function init() {
          };
 
          return layer;
-     };
+    };
 
-     ymaps.layer.storage.add('mq#aerial', MQLayer);
+    ymaps.layer.storage.add('mq#aerial', MQLayer);
 
-     var myMapType = new ymaps.MapType('MQ + Ya', ['mq#aerial']);
+    var myMapType = new ymaps.MapType('MQ + Ya', ['mq#aerial']);
 
-     ymaps.mapType.storage.add(myMapType);
+    ymaps.mapType.storage.add(myMapType);
 
      myMap = new ymaps.Map('map', {
              center: [55.832135, 37.628041],

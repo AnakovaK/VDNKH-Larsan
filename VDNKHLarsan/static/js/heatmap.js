@@ -37,7 +37,6 @@ ymaps.ready(['Heatmap']).then(function init(){
     var date = new Date();
     var todayDate = date.getDate().toString().padStart(2, "0")
     var formatedDate = `${todayDate}.${date.getMonth()}.${date.getFullYear()}`
-    var date = new Date();
     var time = date.getHours()
     if (time < 10 || time > 22) {
         time = 0

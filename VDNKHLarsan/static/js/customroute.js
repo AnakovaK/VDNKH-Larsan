@@ -18,10 +18,6 @@ function init(){
     for (var item of routeData) {
         coords[test] = places[item].geometry.coordinates.reverse();
         test++;
-        //var placemark = new ymaps.Placemark(coords, {
-        //balloonContent: '<img src="http://img-fotki.yandex.ru/get/6114/82599242.2d6/0_88b97_ec425cf5_M" />',
-        //iconContent: "Место посещения"});
-        //myMap.geoObjects.add(placemark);
     }
 
     multiRoute = new ymaps.multiRouter.MultiRoute({
@@ -37,7 +33,7 @@ function init(){
     var IconLayoutClass = ymaps.templateLayoutFactory.createClass(
         '<img class = "my-mark" width={{properties.iconImageSize[0]}} height={{properties.iconImageSize[1]}} src = {{properties.iconImageHref}}>'+
         '{% if properties.textVisible == "Visible" %}'+
-        '<p id = "caption-text" style="margin-top: 10px; font-size: 0.5em; line-height: 0.9; margin-right: 10px"> {{properties.iconCaption}}</p>'+
+        '<p id = "caption-text" style="margin-top: 10px; font-size: 0.9em; line-height: 0.9; margin-right: 10px"> {{properties.iconCaption}}</p>'+
         '{% endif %}',{
             build: function (){
                 IconLayoutClass.superclass.build.call(this)
@@ -125,7 +121,7 @@ function init(){
          properties: {
              balloonContentHeader: place.properties.title,
              balloonContentBody: `<img src="${image}">`,
-             balloonContentFooter: `<button type="button" value="${place.id}" id = "addToRoute">Добавить в маршрут</button>`,
+             balloonContentFooter: `<button type="button" value="${place.id}" id = "addToRoute" onClick="window.location.reload();">Добавить в маршрут</button>`,
              iconImageHref: placemarkIconsInactive[placeKey],
              iconCaption: place.properties.show_title,
              iconImageSize: chooseSize(place),
@@ -163,9 +159,13 @@ function init(){
              })
              balloonIdOnClick = places[parseInt(placeKeys[objectId])].id
              $("#addToRoute").bind({
-                    click : function (){
-                     var vl = $(this).val()
-                     onClickAddRoute(vl)
+                click : function (){
+                var vl = $(this).val()
+                var title = places[vl].properties.title
+                var siteUrl = places[vl].properties.url
+                var imgUrl = places[vl].properties.pic
+                var ticketUrl = places[vl].properties.tickets_link
+                onClickAddRoute(vl, title, siteUrl, imgUrl, ticketUrl)
              }})
          } else if (e.get('type') == 'balloonclose') {
              objectManager.objects.setObjectOptions(objectId, {
@@ -224,16 +224,6 @@ function init(){
        ymaps.mapType.storage.add(myMapType);
 
     var bl = 0;
-    // coords2 = []
-    // for (var item of routeData) {
-    //     coords2[bl] = places[item].geometry.coordinates.reverse();
-    //     console.log(coords2[bl])
-    //     var temp_pm = new ymaps.Placemark(coords2[item], {}, {
-    //         preset: "islands#circleDotIcon",
-    //         iconColor: '#ff0000'
-    //     });
-    //     myMap.geoObjects.add(temp_pm);
-    // }
 
     myMap.geoObjects.add(multiRoute)
 
@@ -244,22 +234,23 @@ function init(){
     myMap.controls.remove("searchControl")
 }
 
- function onClickAddRoute(placeId){
+ function onClickAddRoute(placeId, title, siteUrl, imgUrl, ticketUrl){
      console.log("Hello button!")
      console.log(placeId)
      $.ajax({
          method: "POST",
          url: "",
          data: {
-             'placeId': placeId
+             'placeId': placeId,
+             'title': title,
+             'siteUrl': siteUrl,
+             'imgUrl': imgUrl,
+             'ticketUrl': ticketUrl
          },
-         success: function (data){
-             alert("It worked")
-         },
+         success: function (data){},
          error: function (data, textStatus, errorThrown){
              console.log(textStatus)
              console.log(errorThrown)
-             alert("ya obosralsa")
          }
      })
  }
