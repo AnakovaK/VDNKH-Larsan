@@ -93,7 +93,6 @@ DATABASES = {
         'PASSWORD': os.environ.get('POSTGRES_PASSWORD'),
         'PORT': os.environ.get('POSTGRES_PORT'),
     }
-
 }
 
 db_from_env = dj_database_url.config()
