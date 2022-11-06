@@ -1,2 +1,2 @@
-web: gunicorn VDNKH-Larsan.wsgi --log-file
+web: gunicorn VDNKHLarsan.wsgi --log-file
 
