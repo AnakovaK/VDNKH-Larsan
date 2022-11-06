@@ -84,8 +84,8 @@ function init() {
         var place = places[parseInt(placeKeys[placeKey])]
         var image = ADDRESS_PREFIX + place.properties.pic
 
-        placemarkIconsInactive[placeKey] = "http://127.0.0.1:8000/static/img/icons/inactive/" + place.properties.icon + ".svg"
-        placemarkIconsActive[placeKey] = "http://127.0.0.1:8000/static/img/icons/active/" + place.properties.icon + "-active.svg"
+        placemarkIconsInactive[placeKey] = "/static/img/icons/inactive/" + place.properties.icon + ".svg"
+        placemarkIconsActive[placeKey] = "/static/img/icons/active/" + place.properties.icon + "-active.svg"
         objectManager.add({
             type: 'Feature',
             id: placeKey,
