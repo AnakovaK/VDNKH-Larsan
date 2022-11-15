@@ -1,0 +1,24 @@
+@media screen and (max-width: 1024px) {
+  .form__submit-btn {
+    width: 100%;
+    padding: 13px 0;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .page-title {
+    font-size: 60px;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .page-title {
+    font-size: 45px;
+  }
+}
+
+@media screen and (max-width: 500px) {
+  .page-title {
+    font-size: 30px;
+  }
+}

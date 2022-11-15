@@ -7,6 +7,7 @@
 
 {% block extra_css %}
 <link rel="stylesheet" href="{% static 'css/forms.css' %}">
+<link rel="stylesheet" href="{% static 'css/sign-up.css' %}">
 {% endblock %}
 
 {% block top %}
@@ -34,7 +35,7 @@
         {% endif %}
 
         {% for input in form %}
-        <div class="form__field col-6">
+        <div class="form__field col-lg-6 col-md-12">
           <label class="form__label" for="{{ input.id_for_label }}">{{ input.label }}:</label>
           {{ input }}
           <div class="form__input-underline" id="{{ input.id_for_label }}-underline"></div>

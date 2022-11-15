@@ -4,25 +4,32 @@
 {% block map_title %}Загруженность ВДНХ{% endblock %}
 
 {% block map_extra_css %}
-<link rel="stylesheet" href="{% static 'css/route-detail.css' %}">
+<link rel="stylesheet" href="{% static 'css/heatmap.css' %}">
 {% endblock %}
 
 {% block map_top %}
-<div class="top route-top" style="background-image: url('../static/img/5.jpg');">
-        <div class="top__container container-fluid d-flex flex-column">
-          <div class="route-link-container">
-            <a class="route-link" href="{% url 'map' %}">< Назад</a>
-        </div>
-        <h1 class="page-title">Загруженность ВДНХ</h1>
-            </div>
+<div class="top">
+  <div class="top__container container-fluid d-flex flex-column">
+    <div class="route-link-container">
+      <a class="route-link" href="{% url 'map' %}">
+        < Назад</a>
+    </div>
+    <h1 class="page-title">Загруженность ВДНХ</h1>
+  </div>
 </div>
 {% endblock %}
 
 {% block map_detail %}
-    <div class="map" id="map_c" style="margin-top: 105px"></div>
+<section class="section">
+  <div class="container-fluid">
+    <button class="btn-reset show-map-btn" onclick="showMap()">Показать карту</button>
+    <button class="btn-reset close-map-btn" id="close-map-btn" onclick="hideMap()">Скрыть карту</button>
+  </div>
+</section>
 {% endblock %}
 
 {% block extra_js %}
-    <script src="{% static 'js/congestions.js' %}"></script>
-    <script src="{% static 'js/heatmap.js' %}"></script>
+<script src="{% static 'js/congestions.js' %}"></script>
+<script src="{% static 'js/heatmap.js' %}"></script>
+<script src="{% static 'js/show-hide-map.js' %}"></script>
 {% endblock %}

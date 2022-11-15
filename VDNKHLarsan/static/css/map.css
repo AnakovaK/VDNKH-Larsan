@@ -1,3 +1,41 @@
+.close-map-btn {
+  display: none;
+  position: fixed;
+  top: 96px;
+  right: 12px;
+  z-index: 2000;
+  padding: 15px 20px 15px 40px;
+  background-color: #fff;
+  border-radius: 4px;
+  color: var(--col_1);
+}
+
+.close-map-btn::before {
+  content: "";
+  position: absolute;
+  top: calc(50% - 1px);
+  left: 20px;
+  height: 2px;
+  width: 16px;
+  background-color: var(--col_1);
+  transform: rotate(45deg);
+}
+
+.close-map-btn::after {
+  content: "";
+  position: absolute;
+  top: calc(50% - 1px);
+  left: 20px;
+  height: 2px;
+  width: 16px;
+  background-color: var(--col_1);
+  transform: rotate(-45deg);
+}
+
+.hidden {
+  display: none;
+}
+
 .content {
   width: 50%;
   background-color: var(--col_1);
@@ -5,6 +43,24 @@
 
 .page-title {
   margin-bottom: 32px;
+}
+
+a:hover {
+  color: #d3d3d3;
+}
+
+.auth-title {
+  font-size: 24px;
+}
+
+.show-map-btn {
+  display: none;
+  width: 100%;
+  margin-bottom: 20px;
+  background-color: #fff;
+  padding: 15px 20px;
+  color: var(--col_1);
+  border-radius: 4px;
 }
 
 .map {
@@ -34,4 +90,20 @@
 
 #addToRoute:active {
   background-color: #ff0011;
+}
+
+@media screen and (max-width: 1024px) {
+  .content {
+    width: 100%;
+  }
+  
+  .map {
+    width: 100%;
+    left: 0;
+    display: none;
+  }
+
+  .show-map-btn {
+    display: block;
+  }
 }

@@ -1,3 +1,7 @@
+.page-title {
+  word-wrap: break-word;
+}
+
 .profile__redact {
   margin-bottom: 32px;
 }
@@ -42,7 +46,7 @@
 }
 
 .field {
-  width: calc((100% / 3) - 10px);
+  width: calc((100% / 3) - 7px);
   padding: 15px;
   margin-bottom: 20px;
   background-color: #fff;
@@ -82,4 +86,22 @@
 
 .route:hover a {
   color: #e5e5e5;
+}
+
+@media screen and (max-width: 768px) {
+  .page-title {
+    font-size: 30px;
+  }
+
+  .field {
+    width: 100%;
+  }
+
+  .field:not(:nth-child(3n)) {
+    margin-right: 0;
+  }
+
+  .routes-title { 
+    font-size: 42px;
+  }
 }

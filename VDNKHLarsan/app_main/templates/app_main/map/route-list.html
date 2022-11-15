@@ -10,12 +10,14 @@
 {% block map_detail %}
 <section class="section">
   <div class="container-fluid">
-    <ul class="route-list list-reset d-flex">
+    <ul class="route-list list-reset row">
       {% for route in routes %}
-        <li class="route">
+        <li class="route col-xl-4 col-lg-6 col-12">
           <a href="{% url 'route-detail' route.code %}">
             <h2 class="route__title">{{ route.name }}</h2>
-            <img class="route__img" src="{{ route.pic_url }}" alt="">
+            <div class="route__img-wrapper">
+              <img class="route__img" src="{{ route.pic_url }}" alt="">
+            </div>
           </a>
         </li>
       {% endfor %}

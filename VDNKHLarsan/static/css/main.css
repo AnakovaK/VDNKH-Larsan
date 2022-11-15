@@ -72,3 +72,9 @@ a {
     font-size: 40px;
   }
 }
+
+@media screen and (max-height: 600px) {
+  .top {
+    padding-top: 64px;
+  }
+}
