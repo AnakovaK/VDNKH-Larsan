@@ -23,7 +23,7 @@
   border-radius: 4px;
 }
 
-.nav-item:not(:last-child){
+.nav-item:not(:last-child) {
   margin-right: 32px;
 }
 
@@ -33,4 +33,24 @@
   font-size: 18px;
   line-height: 24px;
   color: var(--col_1);
+}
+
+.nav-link:hover {
+  color: #262626;
+}
+
+@media screen and (max-height: 600px) {
+  .header {
+    height: 56px;
+  }
+
+  .navbar__container {
+    height: 56px;
+  }
+
+  .logo {
+    width: 40px;
+    height: 40px;
+    background-size: cover;
+  }
 }

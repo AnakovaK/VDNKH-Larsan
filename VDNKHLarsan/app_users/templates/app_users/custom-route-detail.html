@@ -3,29 +3,36 @@
 
 {% block map_title %}Маршрут №{{ route.id }}{% endblock %}
 
-{% block map_detail %}
+{% block map_extra_css %}
+<link rel="stylesheet" href="{% static 'css/custom-route-detail.css' %}">
+{% endblock %}
 
-<script src="{% static 'js/places.js' %}"></script>
+{% block map_detail %}
 <section class="section">
-    {% for point in route.route_points.all %}
-    <div class="card mb-3" style="margin-left:10px; margin-right:10px;">
-        <div class="row">
-            <div class="col-sm-2">
-                <img src="https://vdnh.ru{{point.img_url}}" style="width:80px; margin:10px;">
-            </div>
-            <div class="col-sm-6">
-                <div class="card-body">
-                    <a href="https://vdnh.ru{{ point.site_url }}" style="color: #e22c38">{{ point }}</a>
-                </div>
-                {% if point.ticket_url %}
-                    <div class="card-footer" style="margin-bottom:2px;">
-                        <a href="{{point.ticket_url}}" style="color: #e22c38;">Купить билет</a>
-                   </div>
-                {% endif %}
-            </div>
-        </div>
+  <div class="container-fluid">
+    <div class="back-link-container">
+      <a class="back-link" href="{% url 'profile' user.id %}">< Назад</a>
     </div>
-    {% endfor %}
+    <button class="btn-reset show-map-btn" onclick="showMap()">Показать карту</button>
+    <button class="btn-reset close-map-btn" id="close-map-btn" onclick="hideMap()">Скрыть карту</button>
+    <ul class="place-list list-reset">
+      {% for point in route.route_points.all %}
+      <li class="card place d-flex">
+        <img class="place__img" src="https://vdnh.ru{{point.img_url}}">
+        <div class="place__text">
+          <div class="card-body">
+            <a href="https://vdnh.ru{{ point.site_url }}">{{ point }}</a>
+          </div>
+          {% if point.ticket_url %}
+          <div class="card-footer">
+            <a href="{{point.ticket_url}}">Купить билет</a>
+          </div>
+          {% endif %}
+        </div>
+      </li>
+      {% endfor %}
+    </ul>
+  </div>
 </section>
 {% endblock %}
 
@@ -41,4 +48,5 @@
   ]
 </script>
 <script src="{% static 'js/customroute.js' %}"></script>
+<script src="{% static 'js/show-hide-map.js' %}"></script>
 {% endblock %}

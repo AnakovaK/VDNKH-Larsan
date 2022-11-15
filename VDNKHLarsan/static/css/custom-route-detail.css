@@ -1,0 +1,25 @@
+.back-link-container {
+  margin-bottom: 10px;
+}
+
+.back-link {
+  font-size: 20px;
+}
+
+.place {
+  margin-bottom: 10px;
+  padding: 15px;
+  flex-direction: row;
+}
+
+.place__img {
+  max-width: 150px;
+}
+
+.place__text {
+  width: 100%;
+}
+
+.place__text *{
+  color: #e22c38;
+}

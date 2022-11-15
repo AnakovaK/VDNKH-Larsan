@@ -7,12 +7,12 @@
 }
 
 .route {
-  width: calc(100% / 3 - 20px);
-  height: 440px;
+  width: calc((100% / 3) - 14px);
   margin-bottom: 20px;
   padding: 15px;
   background-color: #fff;
   border-radius: 4px;
+  word-wrap: break-word;
 }
 
 .route__title {
@@ -26,5 +26,44 @@
 }
 
 .route__img {
-  max-width: 100%;
+  margin: 0 12.5% 25px;
+  max-width: 75%;
+}
+
+@media screen and (max-width: 1200px) {
+  .page-title {
+    font-size: 60px;
+  }
+
+  .route {
+    width: calc(50% - 10px);
+  }
+
+  .route:not(:nth-last-child(3n)) {
+    margin-right: 0;
+  }
+
+  .route:not(:nth-last-child(2n)) {
+    margin-right: 20px;
+  }
+}
+
+@media screen and (max-width: 500px) {
+  .page-title {
+    font-size: 60px;
+  }
+
+  .route {
+    width: 100%;
+  }
+
+  .route:not(:nth-last-child(2n)) {
+    margin-right: 0;
+  }
+}
+
+@media screen and (max-width: 400px) {
+  .page-title {
+    font-size: 45px;
+  }
 }

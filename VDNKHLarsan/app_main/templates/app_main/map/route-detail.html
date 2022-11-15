@@ -25,12 +25,14 @@
     <div class="route-text">
       {{ route.detail_text|safe }}
     </div>
+    <button class="btn-reset show-map-btn" onclick="showMap()">Показать карту</button>
+    <button class="btn-reset close-map-btn" id="close-map-btn" onclick="hideMap()">Скрыть карту</button>
   </div>
 </section>
 <section class="section">
   <div class="container-fluid">
     <h2 class="places-title">Точки маршрута:</h2>
-    <ul class="place-list list-reset">
+    <ul class="place-list">
       {% for place in route.places.all %}
         <li class="place-item">{{ place }}</li>
       {% endfor %}
@@ -51,4 +53,5 @@
   ]
 </script>
 <script src="{% static 'js/popularroute.js' %}"></script>
+<script src="{% static 'js/show-hide-map.js' %}"></script>
 {% endblock %}

@@ -1,0 +1,29 @@
+.top {
+  background-image: url('/static/img/5.jpg');
+  background-size: cover;
+}
+
+.top__container {
+  max-height: 500px;
+  justify-content: space-between;
+}
+
+.page-title {
+  font-size: 60px;
+}
+
+.show-map-btn {
+  margin-top: 25px;
+}
+
+@media screen and (max-width: 1024px) {
+  .page-title {
+    font-size: 50px;
+  }
+}
+
+@media screen and (max-width: 992px) {
+  .page-title {
+    font-size: 35px;
+  }
+}
